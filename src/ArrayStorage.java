@@ -27,16 +27,16 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        Resume get = null;
+        Resume requestedResume = null;
         if (size() != 0) {
             for (int i = 0; i <= size() - 1; i++) {
                 if (storage[i].uuid.equals(uuid)) {
-                    get = storage[i];
+                    requestedResume = storage[i];
                     break;
                 }
             }
         }
-        return get;
+        return requestedResume;
     }
 
     void delete(String uuid) {
