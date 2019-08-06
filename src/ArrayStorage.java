@@ -67,12 +67,13 @@ public class ArrayStorage {
     }
 
     int size() {
-        int resumeAmount = 0;
+        return size;
+/*        int resumeAmount = 0;
         for (int i = 0; i < storage.length - 1; i++) {
             if (storage[i] != null) {
                 resumeAmount++;
             }
         }
-        return resumeAmount;
+        return resumeAmount;*/
     }
 }
