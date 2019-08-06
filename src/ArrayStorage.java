@@ -7,43 +7,45 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10000];
 
     void clear() {
-        Arrays.fill(storage, null);
+        int size = size();
+        if (size != 0) {
+            for (int i = 0; i < size; i++) {
+                storage[i] = null;
+            }
+        }
     }
 
     void save(Resume r) {
-        if (size() == 0) {
-            storage[size()] = r;
-        } else if (size() != storage.length) {
-            for (int i = 0; i <= size() - 1; i++) {
+        int size = size();
+        if (size != storage.length && r.uuid != null) {
+            for (int i = 0; i < size; i++) {
                 if (r.uuid.equals(storage[i].uuid)) {
-                    break;
-                } else if (i == size() - 1) {
-                    storage[size()] = r;
+                    return;
                 }
             }
+            storage[size] = r;
         }
     }
 
     Resume get(String uuid) {
-        Resume requestedResume = new Resume();
-        requestedResume.uuid = null;
-
-        if (size() != 0) {
-            for (int i = 0; i <= size() - 1; i++) {
+        int size = size();
+        if (size != 0) {
+            for (int i = 0; i <= size - 1; i++) {
                 if (storage[i].uuid.equals(uuid)) {
-                    requestedResume.uuid = uuid;
-                    break;
+                    return  storage[i];
                 }
             }
         }
-        return requestedResume;
+        return null;
     }
 
     void delete(String uuid) {
-        if (size() != 0) {
-            for (int i = 0; i <= size() - 1; i++) {
+        int size = size();
+        if (size != 0) {
+            for (int i = 0; i < size; i++) {
                 if (storage[i].uuid.equals(uuid)) {
-                    if (size() - i >= 0) System.arraycopy(storage, i + 1, storage, i, size() - i);
+                        System.arraycopy(storage, i + 1, storage, i, size - i);
+                        return;
                 }
             }
         }
@@ -53,11 +55,13 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] all = new Resume[size()];
-        for (int i = 0; i <= all.length - 1; i++) {
-            all[i] = storage[i];
+        int size = size();
+        Resume[] resumes = new Resume[size];
+        if (size > 0) {
+            resumes = new Resume[size];
+            System.arraycopy(storage, 0, resumes, 0, size);
         }
-        return all;
+        return resumes;
     }
 
     int size() {
