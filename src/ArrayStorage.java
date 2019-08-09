@@ -14,6 +14,17 @@ public class ArrayStorage {
         size = 0;
     }
 
+    public void update(Resume r) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid.equals(r.uuid)) {
+                storage[i] = r;
+            }
+            else {
+                System.out.println("ERROR: Resume with this uuid isn't in the storage");
+            }
+        }
+    }
+
     void save(Resume r) {
         if (size != storage.length && r.uuid != null) {
             for (int i = 0; i < size; i++) {
