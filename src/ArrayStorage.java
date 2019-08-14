@@ -38,20 +38,20 @@ public class ArrayStorage {
     }
 
     void update(Resume r) {
-            if (isInStorage(r)) {
-                storage[storageElementNumber] = r;
-                System.out.println("Resume with uuid" + r.uuid + "is found in storage and updated");
-                return;
-            }
+        if (isInStorage(r)) {
+            storage[storageElementNumber] = r;
+            System.out.println("Resume with uuid" + r.uuid + "is found in storage and updated");
+            return;
+        }
         System.out.println("ERROR: Resume with this uuid isn't in the storage");
     }
 
     void save(Resume r) {
         if (size != storage.length && r.uuid != null) {
-                if (isInStorage(r)) {
-                    System.out.println("Resume with this uuid is already in storage");
-                    return;
-                }
+            if (isInStorage(r)) {
+                System.out.println("Resume with this uuid is already in storage");
+                return;
+            }
             storage[size] = r;
             size++;
         }
@@ -61,19 +61,19 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-            if (isInStorage(uuid)) {
-                return  storage[storageElementNumber];
-            }
+        if (isInStorage(uuid)) {
+            return  storage[storageElementNumber];
+        }
         System.out.println("ERROR: Resume with this uuid isn't in storage");
         return null;
     }
 
     void delete(String uuid) {
-                if (isInStorage(uuid)) {
-                        System.arraycopy(storage, storageElementNumber + 1, storage, storageElementNumber, size - 1 - storageElementNumber);
-                        size--;
-                        return;
-            }
+        if (isInStorage(uuid)) {
+            System.arraycopy(storage, storageElementNumber + 1, storage, storageElementNumber, size - 1 - storageElementNumber);
+            size--;
+            return;
+        }
         System.out.println("ERROR: Resume with this uuid isn't in storage");
     }
 
