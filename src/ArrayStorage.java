@@ -56,7 +56,7 @@ public class ArrayStorage {
             size++;
         }
         else {
-            System.out.println("Storage is full, you can't add one more resume");
+            System.out.println("ERROR: Storage is full or you entered empty uuid");
         }
     }
 
@@ -64,7 +64,7 @@ public class ArrayStorage {
             if (isInStorage(uuid)) {
                 return  storage[storageElementNumber];
             }
-        System.out.println("Resume with this uuid isn't in storage");
+        System.out.println("ERROR: Resume with this uuid isn't in storage");
         return null;
     }
 
@@ -74,7 +74,7 @@ public class ArrayStorage {
                         size--;
                         return;
             }
-        System.out.println("Resume with this uuid isn't in storage");
+        System.out.println("ERROR: Resume with this uuid isn't in storage");
     }
 
     /**
