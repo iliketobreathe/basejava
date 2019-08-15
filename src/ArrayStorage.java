@@ -23,7 +23,7 @@ public class ArrayStorage {
         storageElementNumber = 0;
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                storageElementNumber++;
+                storageElementNumber = i;
                 return true;
             }
         }
@@ -31,9 +31,10 @@ public class ArrayStorage {
     }
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
+        /*for (int i = 0; i < size; i++) {
             storage[i] = null;
-        }
+        }*/
+        Arrays.fill(storage, 0, size - 1, null);
         size = 0;
     }
 
