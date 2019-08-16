@@ -19,23 +19,23 @@ public class ArrayStorage {
     }
 
     public void clear() {
-        Arrays.fill(storage, 0, size - 2, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void update(Resume resume) {
         if (isExist(resume.uuid) >= 0) {
             storage[index] = resume;
-            System.out.println("Resume with uuid " + resume.uuid + " is found in storage and updated");
+            System.out.println("Resume with uuid " + resume.uuid + " was updated");
             return;
         }
-        System.out.println("ERROR: Resume with this uuid isn't in the storage");
+        System.out.println("ERROR: Resume with uuid " + resume.uuid + " isn't in the storage");
     }
 
     public void save(Resume resume) {
         if (size != storage.length && resume.uuid != null) {
             if (isExist(resume.uuid) >= 0) {
-                System.out.println("Resume with this uuid is already in storage");
+                System.out.println("Resume with uuid " + resume.uuid + " is already in storage");
                 return;
             }
             storage[size] = resume;
@@ -49,7 +49,7 @@ public class ArrayStorage {
         if (isExist(uuid) >= 0) {
             return  storage[index];
         }
-        System.out.println("ERROR: Resume with this uuid isn't in storage");
+        System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
         return null;
     }
 
@@ -60,7 +60,7 @@ public class ArrayStorage {
             size--;
             return;
         }
-        System.out.println("ERROR: Resume with this uuid isn't in storage");
+        System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
     }
 
     /**
