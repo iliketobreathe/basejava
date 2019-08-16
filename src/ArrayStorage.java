@@ -10,7 +10,7 @@ public class ArrayStorage {
 
     private int isExist(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 index = i;
                 return i;
             }
@@ -24,18 +24,18 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (isExist(resume.uuid) >= 0) {
+        if (isExist(resume.getUuid()) >= 0) {
             storage[index] = resume;
-            System.out.println("Resume with uuid " + resume.uuid + " was updated");
+            System.out.println("Resume with uuid " + resume.getUuid() + " was updated");
             return;
         }
-        System.out.println("ERROR: Resume with uuid " + resume.uuid + " isn't in the storage");
+        System.out.println("ERROR: Resume with uuid " + resume.getUuid() + " isn't in the storage");
     }
 
     public void save(Resume resume) {
-        if (size != storage.length && resume.uuid != null) {
-            if (isExist(resume.uuid) >= 0) {
-                System.out.println("Resume with uuid " + resume.uuid + " is already in storage");
+        if (size != storage.length && resume.getUuid() != null) {
+            if (isExist(resume.getUuid()) >= 0) {
+                System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
                 return;
             }
             storage[size] = resume;

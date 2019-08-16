@@ -4,7 +4,15 @@
 public class Resume {
 
     // Unique identifier
-    public String uuid;
+    private String uuid;
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
 
     @Override
     public String toString() {
