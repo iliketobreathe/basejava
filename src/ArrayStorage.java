@@ -3,10 +3,11 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
     private int size = 0;
     private int index = 0;
-    private Resume[] storage = new Resume[10_000];
+    private static final int STORAGE_LIMIT = 10_000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
 
     private int isExist(String uuid) {
         for (int i = 0; i < size; i++) {
@@ -33,7 +34,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (size != storage.length && resume.getUuid() != null) {
+        if (size != STORAGE_LIMIT && resume.getUuid() != null) {
             if (isExist(resume.getUuid()) >= 0) {
                 System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
                 return;
