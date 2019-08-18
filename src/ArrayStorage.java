@@ -3,13 +3,13 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage implements Storage {
+public class ArrayStorage extends AbstractArrayStorage {
+    /*private int index = 0;
     private int size = 0;
-    private int index = 0;
     private static final int STORAGE_LIMIT = 10_000;
-    private Resume[] storage = new Resume[STORAGE_LIMIT];
+    private Resume[] storage = new Resume[STORAGE_LIMIT]; */
 
-    private int isExist(String uuid) {
+    protected int isExist(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 index = i;
@@ -46,13 +46,13 @@ public class ArrayStorage implements Storage {
         }
     }
 
-    public Resume get(String uuid) {
+    /*public Resume get(String uuid) {
         if (isExist(uuid) >= 0) {
             return  storage[index];
         }
         System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
         return null;
-    }
+    }*/
 
     public void delete(String uuid) {
         if (isExist(uuid) >= 0) {
@@ -71,7 +71,7 @@ public class ArrayStorage implements Storage {
         return Arrays.copyOf(storage, size);
     }
 
-    public int size() {
+/*    public int size() {
         return size;
-    }
+    }*/
 }
