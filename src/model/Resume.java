@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Initial resume class
  */
@@ -8,6 +10,10 @@ public class Resume implements Comparable<Resume> {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     @Override
@@ -23,10 +29,6 @@ public class Resume implements Comparable<Resume> {
     @Override
     public int hashCode() {
         return uuid.hashCode();
-    }
-
-    public String getUuid() {
-        return uuid;
     }
 
     @Override

@@ -1,5 +1,8 @@
+import model.Resume;
+import storage.SortedArrayStorage;
+
 /**
- * Test for your ArrayStorage implementation
+ * Test for your storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
     private static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();

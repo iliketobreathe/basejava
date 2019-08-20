@@ -1,3 +1,7 @@
+package storage;
+
+import model.Resume;
+
 public interface Storage {
     void clear();
 

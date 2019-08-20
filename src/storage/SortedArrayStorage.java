@@ -1,3 +1,7 @@
+package storage;
+
+import model.Resume;
+
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
@@ -10,18 +14,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void update(Resume resume) {
-        if (isExist(resume.getUuid()) >= 0) {
-            storage[index] = resume;
-            System.out.println("Resume with uuid " + resume.getUuid() + " was updated");
-            return;
-        }
-        System.out.println("ERROR: Resume with uuid " + resume.getUuid() + " isn't in the storage");
-    }
-
-    @Override
     public void save(Resume resume) {
-        if (size != STORAGE_LIMIT && resume.getUuid() != null) {
+        if (isStorageNotFullAndNotNullUuid(resume)) {
             if (isExist(resume.getUuid()) >= 0) {
                 System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
             } else if (Math.abs(index + 1) == size) {
