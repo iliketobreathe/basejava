@@ -30,4 +30,15 @@ public class ArrayStorage extends AbstractArrayStorage {
             System.out.println("ERROR: Storage is full or you entered empty uuid");
         }
     }
+
+    @Override
+    public void delete(String uuid) {
+        if (isExist(uuid) >= 0) {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
+            return;
+        }
+        System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
+    }
 }

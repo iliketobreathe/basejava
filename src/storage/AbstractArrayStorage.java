@@ -13,7 +13,11 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract int isExist(String uuid);
 
-    public boolean isStorageNotFullAndNotNullUuid(Resume resume) {
+    public abstract void save(Resume resume);
+
+    public abstract void delete(String uuid);
+
+    boolean isStorageNotFullAndNotNullUuid(Resume resume) {
         return size != STORAGE_LIMIT && resume.getUuid() != null;
     }
 
@@ -37,16 +41,6 @@ public abstract class AbstractArrayStorage implements Storage {
         }
         System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
         return null;
-    }
-
-    public void delete(String uuid) {
-        if (isExist(uuid) >= 0) {
-            System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
-            storage[size - 1] = null;
-            size--;
-            return;
-        }
-        System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
     }
 
     public Resume[] getAll() {
