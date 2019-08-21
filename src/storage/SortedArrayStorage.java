@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
-    protected int isExist(String uuid) {
+    protected int getIndex(String uuid) {
         Resume searchKey = new Resume(uuid);
         index = Arrays.binarySearch(storage, 0, size, searchKey);
         return index;
@@ -14,8 +14,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void save(Resume resume) {
+        super.save(resume);
         if (isStorageNotFullAndNotNullUuid(resume)) {
-            if (isExist(resume.getUuid()) >= 0) {
+            if (index >= 0) {
                 System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
             } else if (Math.abs(index + 1) == size) {
                 storage[size] = resume;
@@ -33,7 +34,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void delete(String uuid) {
-        if (isExist(uuid) >= 0) {
+        super.delete(uuid);
+        if (index >= 0) {
             System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
             storage[size - 1] = null;
             size--;

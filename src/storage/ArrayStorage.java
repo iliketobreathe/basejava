@@ -7,7 +7,7 @@ import model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    protected int isExist(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 index = i;
@@ -20,7 +20,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     public void save(Resume resume) {
         if (isStorageNotFullAndNotNullUuid(resume)) {
-            if (isExist(resume.getUuid()) >= 0) {
+            if (getIndex(resume.getUuid()) >= 0) {
                 System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
                 return;
             }
@@ -33,7 +33,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void delete(String uuid) {
-        if (isExist(uuid) >= 0) {
+        if (getIndex(uuid) >= 0) {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
