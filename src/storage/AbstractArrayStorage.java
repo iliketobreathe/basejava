@@ -13,9 +13,9 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract int getIndex(String uuid);
 
-    boolean isStorageNotFullAndNotNullUuid(Resume resume) {
-        return size != STORAGE_LIMIT && resume.getUuid() != null;
-    }
+    protected abstract void childSave(Resume resume);
+
+    protected abstract void childDelete();
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -23,13 +23,8 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void save(Resume resume) {
-        if (isStorageNotFullAndNotNullUuid(resume)) {
-            if (getIndex(resume.getUuid()) >= 0) {
-                System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
-                return;
-            }
-            storage[size] = resume;
-            size++;
+        if (size != STORAGE_LIMIT && resume.getUuid() != null) {
+            childSave(resume);
         } else {
             System.out.println("ERROR: Storage is full or you entered empty uuid");
         }
@@ -54,12 +49,10 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void delete(String uuid) {
         if (getIndex(uuid) >= 0) {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
-            size--;
-            return;
+            childDelete();
+        } else {
+            System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
         }
-        System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
     }
 
     public Resume[] getAll() {
