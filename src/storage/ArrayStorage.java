@@ -18,19 +18,12 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void childSave(Resume resume) {
-        if (getIndex(resume.getUuid()) >= 0) {
-            System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
-            return;
-        }
+    protected void saveElement(Resume resume) {
         storage[size] = resume;
-        size++;
     }
 
     @Override
-    protected void childDelete() {
+    protected void deleteElement() {
         storage[index] = storage[size - 1];
-        storage[size - 1] = null;
-        size--;
     }
 }
