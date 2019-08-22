@@ -14,9 +14,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void save(Resume resume) {
-        super.save(resume);
         if (isStorageNotFullAndNotNullUuid(resume)) {
-            if (index >= 0) {
+            if (getIndex(resume.getUuid()) >= 0) {
                 System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
             } else if (Math.abs(index + 1) == size) {
                 storage[size] = resume;
@@ -34,8 +33,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void delete(String uuid) {
-        super.delete(uuid);
-        if (index >= 0) {
+        if (getIndex(uuid) >= 0) {
             System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
             storage[size - 1] = null;
             size--;
