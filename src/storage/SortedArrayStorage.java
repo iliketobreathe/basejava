@@ -14,11 +14,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void saveElement(Resume resume) {
-        if (Math.abs(index + 1) == size) {
-            storage[size] = resume;
-        } else if (size - Math.abs(index + 1) >= 0) {
-            System.arraycopy(storage, Math.abs(index + 1), storage, Math.abs(index + 1) + 1, size - Math.abs(index + 1));
-            storage[Math.abs(index + 1)] = resume;
+        int binarySearchIndex = Math.abs(index + 1);
+        if (binarySearchIndex == size) {
+            storage[binarySearchIndex] = resume;
+        } else if (size - binarySearchIndex >= 0) {
+            System.arraycopy(storage, binarySearchIndex, storage, binarySearchIndex + 1, size - binarySearchIndex);
+            storage[binarySearchIndex] = resume;
         }
     }
 
