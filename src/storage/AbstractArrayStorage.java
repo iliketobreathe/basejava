@@ -1,5 +1,8 @@
 package storage;
 
+import exception.ExistStorageException;
+import exception.NotExistStorageException;
+import exception.StorageException;
 import model.Resume;
 
 import java.util.Arrays;
@@ -23,42 +26,44 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void save(Resume resume) {
-        if (size != STORAGE_LIMIT && resume.getUuid() != null) {
-            if (getIndex(resume.getUuid()) >= 0) {
-                System.out.println("Resume with uuid " + resume.getUuid() + " is already in storage");
+        getIndex(resume.getUuid());
+        if (size != STORAGE_LIMIT) {
+            if (index >= 0) {
+                throw new ExistStorageException(resume.getUuid());
             } else {
                 saveElement(resume);
                 size++;
             }
         } else {
-            System.out.println("ERROR: Storage is full or you entered empty uuid");
+            throw new StorageException("Storage overflow", resume.getUuid());
         }
     }
 
     public void update(Resume resume) {
-        if (getIndex(resume.getUuid()) >= 0) {
+        getIndex(resume.getUuid());
+        if (index < 0) {
+            throw new NotExistStorageException(resume.getUuid());
+        } else {
             storage[index] = resume;
-            System.out.println("Resume with uuid " + resume.getUuid() + " was updated");
-            return;
         }
-        System.out.println("ERROR: Resume with uuid " + resume.getUuid() + " isn't in the storage");
     }
 
     public Resume get(String uuid) {
-        if (getIndex(uuid) >= 0) {
+        getIndex(uuid);
+        if (index >= 0) {
             return  storage[index];
         }
-        System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     public void delete(String uuid) {
-        if (getIndex(uuid) >= 0) {
+        getIndex(uuid);
+        if (index >= 0) {
             deleteElement();
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("ERROR: Resume with uuid " + uuid + " isn't in storage");
+            throw new NotExistStorageException(uuid);
         }
     }
 
