@@ -42,10 +42,14 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void update() {
+        Resume resume = new Resume("uuid3");
+        storage.update(resume);
+        Assert.assertEquals("uuid3", resume.getUuid());
     }
 
     @Test
     public void get() {
+        Assert.assertEquals("uuid1", storage.get("uuid1").getUuid());
     }
 
     @Test
@@ -56,6 +60,14 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() {
+        Resume[] testStorage = new Resume[3];
+        testStorage[0] = new Resume("uuid1");
+        testStorage[1] = new Resume("uuid2");
+        testStorage[2] = new Resume("uuid3");
+        for (int i = 0; i < 3; i++) {
+            Assert.assertEquals(testStorage[i], storage.getAll()[i]);
+        }
+
     }
 
     @Test
@@ -74,11 +86,9 @@ public abstract class AbstractArrayStorageTest {
             for (int i = storage.size(); i < 10_000; i++) {
                 storage.save(new Resume());
             }
-        }
-        catch (StorageException e) {
+        } catch (StorageException e) {
             Assert.fail("Storage overflow expected later");
         }
-
         storage.save(new Resume());
     }
 }
