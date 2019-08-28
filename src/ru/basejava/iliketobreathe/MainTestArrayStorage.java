@@ -1,9 +1,11 @@
-import model.Resume;
-import storage.ArrayStorage;
-import storage.Storage;
+package ru.basejava.iliketobreathe;
+
+import ru.basejava.iliketobreathe.model.Resume;
+import ru.basejava.iliketobreathe.storage.ArrayStorage;
+import ru.basejava.iliketobreathe.storage.Storage;
 
 /**
- * Test for your storage.ArrayStorage implementation
+ * Test for your ru.basejava.iliketobreathe.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
     private static final Storage ARRAY_STORAGE = new ArrayStorage();

@@ -1,13 +1,15 @@
-import model.Resume;
-import storage.ArrayStorage;
-import storage.Storage;
+package ru.basejava.iliketobreathe;
+
+import ru.basejava.iliketobreathe.model.Resume;
+import ru.basejava.iliketobreathe.storage.ArrayStorage;
+import ru.basejava.iliketobreathe.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for storage.ArrayStorage implementation
+ * Interactive test for ru.basejava.iliketobreathe.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {

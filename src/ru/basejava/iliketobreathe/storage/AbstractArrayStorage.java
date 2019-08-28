@@ -1,9 +1,9 @@
-package storage;
+package ru.basejava.iliketobreathe.storage;
 
-import exception.ExistStorageException;
-import exception.NotExistStorageException;
-import exception.StorageException;
-import model.Resume;
+import ru.basejava.iliketobreathe.exception.ExistStorageException;
+import ru.basejava.iliketobreathe.exception.NotExistStorageException;
+import ru.basejava.iliketobreathe.exception.StorageException;
+import ru.basejava.iliketobreathe.model.Resume;
 
 import java.util.Arrays;
 
@@ -18,11 +18,13 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void deleteElement(int index);
 
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    @Override
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index >= 0) {
@@ -35,6 +37,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
+    @Override
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
@@ -44,6 +47,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
+    @Override
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
@@ -52,6 +56,7 @@ public abstract class AbstractArrayStorage implements Storage {
         throw new NotExistStorageException(uuid);
     }
 
+    @Override
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
@@ -63,10 +68,12 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
+    @Override
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
+    @Override
     public int size() {
 
         return size;

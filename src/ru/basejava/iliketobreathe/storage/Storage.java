@@ -1,6 +1,6 @@
-package storage;
+package ru.basejava.iliketobreathe.storage;
 
-import model.Resume;
+import ru.basejava.iliketobreathe.model.Resume;
 
 public interface Storage {
     void clear();

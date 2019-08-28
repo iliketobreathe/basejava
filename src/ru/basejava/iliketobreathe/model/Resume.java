@@ -1,4 +1,4 @@
-package model;
+package ru.basejava.iliketobreathe.model;
 
 import java.util.UUID;
 

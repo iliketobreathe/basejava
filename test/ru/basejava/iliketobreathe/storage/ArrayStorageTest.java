@@ -1,6 +1,4 @@
-package storage;
-
-import static org.junit.Assert.*;
+package ru.basejava.iliketobreathe.storage;
 
 public class ArrayStorageTest extends AbstractArrayStorageTest {
     public ArrayStorageTest() {

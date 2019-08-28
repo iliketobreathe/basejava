@@ -1,4 +1,4 @@
-package exception;
+package ru.basejava.iliketobreathe.exception;
 
 public class NotExistStorageException extends StorageException {
     public NotExistStorageException(String uuid) {

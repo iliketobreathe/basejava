@@ -1,9 +1,9 @@
-package storage;
+package ru.basejava.iliketobreathe.storage;
 
-import model.Resume;
+import ru.basejava.iliketobreathe.model.Resume;
 
 /**
- * Array based storage for Resumes
+ * Array based ru.basejava.iliketobreathe.storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
     @Override

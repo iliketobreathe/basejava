@@ -1,4 +1,6 @@
-import model.Resume;
+package ru.basejava.iliketobreathe;
+
+import ru.basejava.iliketobreathe.model.Resume;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
