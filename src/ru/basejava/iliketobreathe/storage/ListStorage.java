@@ -25,14 +25,12 @@ public class ListStorage extends AbstractStorage {
     protected void saveInStorage(Resume resume, int index) {
         if (resume.getUuid() != null) {
             storage.add(resume);
-            size++;
         }
     }
 
     @Override
     protected void deleteFromStorage(int index) {
         storage.remove(index);
-        size--;
     }
 
     @Override
@@ -48,5 +46,10 @@ public class ListStorage extends AbstractStorage {
     @Override
     public Resume[] getAll() {
         return storage.toArray(new Resume[storage.size()]);
+    }
+
+    @Override
+    public int size() {
+        return storage.size();
     }
 }

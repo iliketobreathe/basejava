@@ -8,6 +8,7 @@ import java.util.Arrays;
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected int size = 0;
 
     protected abstract void saveElement(Resume resume, int index);
 
@@ -49,5 +50,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 }

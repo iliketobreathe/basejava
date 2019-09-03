@@ -5,7 +5,6 @@ import ru.basejava.iliketobreathe.exception.NotExistStorageException;
 import ru.basejava.iliketobreathe.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    protected int size = 0;
 
     protected abstract int getIndex(String uuid);
     protected abstract void updateElement(Resume resume, int index);
@@ -49,10 +48,5 @@ public abstract class AbstractStorage implements Storage {
         } else {
             throw new NotExistStorageException(uuid);
         }
-    }
-
-    @Override
-    public int size() {
-        return size;
     }
 }
