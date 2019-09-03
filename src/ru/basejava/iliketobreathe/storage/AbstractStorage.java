@@ -6,16 +6,17 @@ import ru.basejava.iliketobreathe.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract int getIndex(String uuid);
-    protected abstract void updateElement(Resume resume, int index);
-    protected abstract void saveInStorage(Resume resume, int index);
-    protected abstract void deleteFromStorage(int index);
-    protected abstract Resume getElement(int index);
+    protected abstract Object getIndex(String uuid);
+    protected abstract boolean isTrue(Object index);
+    protected abstract void updateElement(Resume resume, Object index);
+    protected abstract void saveInStorage(Resume resume, Object index);
+    protected abstract void deleteFromStorage(Object index);
+    protected abstract Resume getElement(Object index);
 
     @Override
     public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
+        Object index = getIndex(resume.getUuid());
+        if (isTrue(index)) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
             updateElement(resume, index);
@@ -24,8 +25,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index >= 0) {
+        Object index = getIndex(resume.getUuid());
+        if (isTrue(index)) {
             throw new ExistStorageException(resume.getUuid());
         }
         saveInStorage(resume, index);
@@ -33,8 +34,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
+        Object index = getIndex(uuid);
+        if (isTrue(index)) {
             return getElement(index);
         }
         throw new NotExistStorageException(uuid);
@@ -42,8 +43,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
+        Object index = getIndex(uuid);
+        if (isTrue(index)) {
             deleteFromStorage(index);
         } else {
             throw new NotExistStorageException(uuid);

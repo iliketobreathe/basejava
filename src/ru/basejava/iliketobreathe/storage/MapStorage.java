@@ -7,40 +7,37 @@ import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
     private Map<String, Resume> storage = new HashMap<>();
-    private String uuidMap = "";
     @Override
-    protected int getIndex(String uuid) {
-        /*for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            if (entry.getKey().equals(uuid)) {
-                return 1;
-            }
-        }
-        return -1;*/
-        uuidMap = uuid;
+    protected Object getIndex(String uuid) {
         if (storage.containsKey(uuid)) {
-            return 1;
+            return uuid;
         }
-        return -1;
+        return null;
     }
 
     @Override
-    protected void updateElement(Resume resume, int index) {
+    protected boolean isTrue(Object index) {
+        return storage.containsKey(index);
+    }
+
+    @Override
+    protected void updateElement(Resume resume, Object index) {
         storage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void saveInStorage(Resume resume, int index) {
+    protected void saveInStorage(Resume resume, Object index) {
         storage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void deleteFromStorage(int index) {
-        storage.remove(uuidMap);
+    protected void deleteFromStorage(Object index) {
+        storage.remove(index);
     }
 
     @Override
-    protected Resume getElement(int index) {
-        return storage.get(uuidMap);
+    protected Resume getElement(Object index) {
+        return storage.get(index);
     }
 
     @Override

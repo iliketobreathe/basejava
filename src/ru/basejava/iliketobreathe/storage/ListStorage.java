@@ -7,8 +7,14 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
     private List<Resume> storage = new ArrayList<>();
+
     @Override
-    protected int getIndex(String uuid) {
+    protected boolean isTrue(Object index) {
+        return (int)index >= 0;
+    }
+
+    @Override
+    protected Object getIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (uuid.equals(storage.get(i).getUuid()))
                 return i;
@@ -17,25 +23,25 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateElement(Resume resume, int index) {
-        storage.set(index, resume);
+    protected void updateElement(Resume resume, Object index) {
+        storage.set((int) index, resume);
     }
 
     @Override
-    protected void saveInStorage(Resume resume, int index) {
+    protected void saveInStorage(Resume resume, Object index) {
         if (resume.getUuid() != null) {
             storage.add(resume);
         }
     }
 
     @Override
-    protected void deleteFromStorage(int index) {
-        storage.remove(index);
+    protected void deleteFromStorage(Object index) {
+        storage.remove((int)index);
     }
 
     @Override
-    protected Resume getElement(int index) {
-        return storage.get(index);
+    protected Resume getElement(Object index) {
+        return storage.get((int) index);
     }
 
     @Override
