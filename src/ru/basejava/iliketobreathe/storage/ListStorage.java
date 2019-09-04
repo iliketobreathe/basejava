@@ -9,7 +9,7 @@ public class ListStorage extends AbstractStorage {
     private List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected boolean isTrue(Object index) {
+    protected boolean isExist(Object index) {
         return (int)index >= 0;
     }
 
@@ -29,9 +29,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void saveInStorage(Resume resume, Object index) {
-        if (resume.getUuid() != null) {
-            storage.add(resume);
-        }
+        storage.add(resume);
     }
 
     @Override

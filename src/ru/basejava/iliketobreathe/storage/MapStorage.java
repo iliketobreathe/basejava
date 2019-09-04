@@ -9,14 +9,11 @@ public class MapStorage extends AbstractStorage {
     private Map<String, Resume> storage = new HashMap<>();
     @Override
     protected Object getIndex(String uuid) {
-        if (storage.containsKey(uuid)) {
-            return uuid;
-        }
-        return null;
+        return uuid;
     }
 
     @Override
-    protected boolean isTrue(Object index) {
+    protected boolean isExist(Object index) {
         return storage.containsKey(index);
     }
 
