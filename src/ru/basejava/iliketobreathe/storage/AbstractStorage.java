@@ -4,6 +4,7 @@ import ru.basejava.iliketobreathe.exception.ExistStorageException;
 import ru.basejava.iliketobreathe.exception.NotExistStorageException;
 import ru.basejava.iliketobreathe.model.Resume;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
@@ -14,10 +15,9 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void saveInStorage(Resume resume, Object searchKey);
     protected abstract void deleteFromStorage(Object searchKey);
     protected abstract Resume getElement(Object searchKey);
+    protected abstract List<Resume> getList();
 
     public abstract void clear();
-/*    public abstract Resume[] getAll();*/
-    public abstract List<Resume> getAllSorted();
     public abstract int size();
 
     @Override
@@ -36,6 +36,14 @@ public abstract class AbstractStorage implements Storage {
     public Resume get(String uuid) {
         Object searchKey = getExistedSearchKey(uuid);
         return getElement(searchKey);
+    }
+
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> list;
+        list = getList();
+        Collections.sort(list);
+        return list;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package ru.basejava.iliketobreathe;
 
 import ru.basejava.iliketobreathe.model.Resume;
-import ru.basejava.iliketobreathe.storage.SortedArrayStorage;
+import ru.basejava.iliketobreathe.storage.ArrayStorage;
 import ru.basejava.iliketobreathe.storage.Storage;
 
 import java.io.BufferedReader;
@@ -14,7 +14,7 @@ import java.util.List;
  * (just run, no need to understand)
  */
 public class MainArray {
-    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
+    private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

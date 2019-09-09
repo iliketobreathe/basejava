@@ -2,9 +2,7 @@ package ru.basejava.iliketobreathe.storage;
 
 import ru.basejava.iliketobreathe.model.Resume;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapOtherStorage extends AbstractStorage {
     private Map<String, Resume> storage = new HashMap<>();
@@ -30,13 +28,15 @@ public class MapOtherStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteFromStorage(Resume resume) {
-        storage.remove(resume.getUuid());
+    protected void deleteFromStorage(Object resume) {
+        Resume resumeToDelete = (Resume)resume;
+        storage.remove(resumeToDelete.getUuid());
     }
 
     @Override
-    protected Resume getElement(Resume resume) {
-        return storage.get(resume.getUuid());
+    protected Resume getElement(Object resume) {
+        Resume resumeToGet = (Resume)resume;
+        return storage.get(resumeToGet.getUuid());
     }
 
     @Override
@@ -44,14 +44,9 @@ public class MapOtherStorage extends AbstractStorage {
         storage.clear();
     }
 
-/*    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }*/
-
     @Override
-    public List<Resume> getAllSorted() {
-        return null;
+    public List<Resume> getList() {
+        return new ArrayList<>(storage.values());
     }
 
     @Override

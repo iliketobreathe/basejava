@@ -3,7 +3,6 @@ package ru.basejava.iliketobreathe.storage;
 import ru.basejava.iliketobreathe.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -48,16 +47,9 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-/*    @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
-    }*/
-
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> list = new ArrayList<>(storage);
-        Collections.sort(list);
-        return list;
+    public List<Resume> getList() {
+        return new ArrayList<>(storage);
     }
 
     @Override
