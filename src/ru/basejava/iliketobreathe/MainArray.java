@@ -1,19 +1,20 @@
 package ru.basejava.iliketobreathe;
 
 import ru.basejava.iliketobreathe.model.Resume;
-import ru.basejava.iliketobreathe.storage.ListStorage;
+import ru.basejava.iliketobreathe.storage.SortedArrayStorage;
 import ru.basejava.iliketobreathe.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * Interactive test for ru.basejava.iliketobreathe.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {
-    private final static Storage ARRAY_STORAGE = new ListStorage();
+    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -66,9 +67,10 @@ public class MainArray {
     }
 
     private static void printAll() {
-        Resume[] all = ARRAY_STORAGE.getAll();
+        /*Resume[] all = ARRAY_STORAGE.getAll();*/
+        List<Resume> all = ARRAY_STORAGE.getAllSorted();
         System.out.println("----------------------------");
-        if (all.length == 0) {
+        if (all.size() == 0) {
             System.out.println("Empty");
         } else {
             for (Resume r : all) {

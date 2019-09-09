@@ -2,38 +2,41 @@ package ru.basejava.iliketobreathe.storage;
 
 import ru.basejava.iliketobreathe.model.Resume;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
+public class MapOtherStorage extends AbstractStorage {
     private Map<String, Resume> storage = new HashMap<>();
+
     @Override
-    protected String getSearchKey(String uuid) {
-        return uuid;
+    protected Resume getSearchKey(String uuid) {
+        return storage.get(uuid);
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return storage.containsKey(searchKey.toString());
+        return storage.containsValue(searchKey);
     }
 
     @Override
     protected void updateElement(Resume resume, Object searchKey) {
-        storage.put(searchKey.toString(), resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected void saveInStorage(Resume resume, Object searchKey) {
-        storage.put(searchKey.toString(), resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void deleteFromStorage(Object searchKey) {
-        storage.remove(searchKey.toString());
+    protected void deleteFromStorage(Resume resume) {
+        storage.remove(resume.getUuid());
     }
 
     @Override
-    protected Resume getElement(Object searchKey) {
-        return storage.get(searchKey.toString());
+    protected Resume getElement(Resume resume) {
+        return storage.get(resume.getUuid());
     }
 
     @Override
@@ -43,14 +46,12 @@ public class MapStorage extends AbstractStorage {
 
 /*    @Override
     public Resume[] getAll() {
-        return storage.values().toArray(new Resume[0]);
+        return new Resume[0];
     }*/
 
     @Override
     public List<Resume> getAllSorted() {
-        List<Resume> list = new ArrayList<>(storage.values());
-        Collections.sort(list);
-        return list;
+        return null;
     }
 
     @Override

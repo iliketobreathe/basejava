@@ -3,18 +3,19 @@ package ru.basejava.iliketobreathe.storage;
 import ru.basejava.iliketobreathe.model.Resume;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
     private List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected boolean isExist(Object index) {
-        return (int)index >= 0;
+    protected boolean isExist(Object searchKey) {
+        return (int)searchKey >= 0;
     }
 
     @Override
-    protected Object getIndex(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (uuid.equals(storage.get(i).getUuid()))
                 return i;
@@ -23,23 +24,23 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateElement(Resume resume, Object index) {
-        storage.set((int) index, resume);
+    protected void updateElement(Resume resume, Object searchKey) {
+        storage.set((Integer) searchKey, resume);
     }
 
     @Override
-    protected void saveInStorage(Resume resume, Object index) {
+    protected void saveInStorage(Resume resume, Object searchKey) {
         storage.add(resume);
     }
 
     @Override
-    protected void deleteFromStorage(Object index) {
-        storage.remove((int)index);
+    protected void deleteFromStorage(Object searchKey) {
+        storage.remove(((Integer) searchKey).intValue());
     }
 
     @Override
-    protected Resume getElement(Object index) {
-        return storage.get((int) index);
+    protected Resume getElement(Object searchKey) {
+        return storage.get((Integer) searchKey);
     }
 
     @Override
@@ -47,9 +48,16 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    @Override
+/*    @Override
     public Resume[] getAll() {
-        return storage.toArray(new Resume[storage.size()]);
+        return storage.toArray(new Resume[0]);
+    }*/
+
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> list = new ArrayList<>(storage);
+        Collections.sort(list);
+        return list;
     }
 
     @Override
