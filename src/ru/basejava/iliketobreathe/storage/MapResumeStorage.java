@@ -4,7 +4,7 @@ import ru.basejava.iliketobreathe.model.Resume;
 
 import java.util.*;
 
-public class MapOtherStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
     private Map<String, Resume> storage = new HashMap<>();
 
     @Override
@@ -14,7 +14,7 @@ public class MapOtherStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return storage.containsValue(searchKey);
+        return searchKey != null;
     }
 
     @Override
@@ -35,8 +35,7 @@ public class MapOtherStorage extends AbstractStorage {
 
     @Override
     protected Resume getElement(Object resume) {
-        Resume resumeToGet = (Resume)resume;
-        return storage.get(resumeToGet.getUuid());
+        return (Resume) resume;
     }
 
     @Override
@@ -45,7 +44,7 @@ public class MapOtherStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getList() {
+    public List<Resume> getAll() {
         return new ArrayList<>(storage.values());
     }
 

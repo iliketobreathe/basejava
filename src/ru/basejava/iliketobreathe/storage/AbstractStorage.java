@@ -15,10 +15,7 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void saveInStorage(Resume resume, Object searchKey);
     protected abstract void deleteFromStorage(Object searchKey);
     protected abstract Resume getElement(Object searchKey);
-    protected abstract List<Resume> getList();
-
-    public abstract void clear();
-    public abstract int size();
+    protected abstract List<Resume> getAll();
 
     @Override
     public void update(Resume resume) {
@@ -40,10 +37,9 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        List<Resume> list;
-        list = getList();
-        Collections.sort(list);
-        return list;
+        List<Resume> resumes = getAll();
+        Collections.sort(resumes);
+        return resumes;
     }
 
     @Override

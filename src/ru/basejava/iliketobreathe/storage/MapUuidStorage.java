@@ -4,8 +4,10 @@ import ru.basejava.iliketobreathe.model.Resume;
 
 import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage {
+
     private Map<String, Resume> storage = new HashMap<>();
+
     @Override
     protected String getSearchKey(String uuid) {
         return uuid;
@@ -42,7 +44,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getList() {
+    public List<Resume> getAll() {
         return new ArrayList<>(storage.values());
     }
 

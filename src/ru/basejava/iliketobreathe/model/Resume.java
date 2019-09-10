@@ -7,7 +7,6 @@ import java.util.UUID;
  */
 public class Resume implements Comparable<Resume> {
 
-    // Unique identifier
     private final String uuid;
 
     private String fullName;
@@ -20,16 +19,9 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
-/*    public Resume(String fullName) {
-        this(UUID.randomUUID().toString(), fullName);
-    }*/
-
-    public Resume(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public Resume() {
+    public Resume(String fullName) {
         this.uuid = UUID.randomUUID().toString();
+        this.fullName = fullName;
     }
 
     public Resume(String uuid, String fullName) {
@@ -59,11 +51,6 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public int compareTo(Resume o) {
-        int a = this.getFullName().compareTo(o.getFullName());
-        if (a != 0) {
-            return a;
-        } else {
-            return this.getUuid().compareTo(o.getUuid());
-        }
+        return  this.getFullName().compareTo(o.getFullName()) != 0 ? this.getFullName().compareTo(o.getFullName()) : this.getUuid().compareTo(o.getUuid());
     }
 }
