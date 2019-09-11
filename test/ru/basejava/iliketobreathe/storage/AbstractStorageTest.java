@@ -7,6 +7,8 @@ import ru.basejava.iliketobreathe.exception.ExistStorageException;
 import ru.basejava.iliketobreathe.exception.NotExistStorageException;
 import ru.basejava.iliketobreathe.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -45,10 +47,13 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllSorted() {
         List<Resume> list = storage.getAllSorted();
+        List<Resume> listWithSort = new ArrayList<>();
+        listWithSort.add(resume1);
+        listWithSort.add(resume2);
+        listWithSort.add(resume3);
+        Collections.sort(listWithSort);
         assertEquals(3, list.size());
-        assertEquals(resume3, list.get(0));
-        assertEquals(resume2, list.get(1));
-        assertEquals(resume1, list.get(2));
+        assertEquals(listWithSort, list);
     }
 
     @Test
