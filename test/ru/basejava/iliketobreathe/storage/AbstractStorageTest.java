@@ -7,8 +7,7 @@ import ru.basejava.iliketobreathe.exception.ExistStorageException;
 import ru.basejava.iliketobreathe.exception.NotExistStorageException;
 import ru.basejava.iliketobreathe.model.Resume;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -25,10 +24,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private Resume resume1 = new Resume(UUID_1, "Will Smith");
-    private Resume resume2 = new Resume(UUID_2, "Keanu Reeves");
-    private Resume resume3 = new Resume(UUID_3, "Angelina Jolie");
-    private Resume resume4 = new Resume(UUID_4, "Brad Pitt");
+    private Resume resume1 = new Resume(UUID_1, "Name1");
+    private Resume resume2 = new Resume(UUID_2, "Name2");
+    private Resume resume3 = new Resume(UUID_3, "Name3");
+    private Resume resume4 = new Resume(UUID_4, "Name4");
 
     @Before
     public void setUp() throws Exception {
@@ -47,13 +46,8 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllSorted() {
         List<Resume> list = storage.getAllSorted();
-        List<Resume> listWithSort = new ArrayList<>();
-        listWithSort.add(resume1);
-        listWithSort.add(resume2);
-        listWithSort.add(resume3);
-        Collections.sort(listWithSort);
         assertEquals(3, list.size());
-        assertEquals(listWithSort, list);
+        assertEquals(list, Arrays.asList(resume1, resume2, resume3));
     }
 
     @Test
@@ -63,7 +57,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_3, "Angelina Jolie");
+        Resume newResume = new Resume(UUID_3, "New Name ");
         storage.update(newResume);
         Assert.assertEquals(newResume, storage.get(UUID_3));
     }

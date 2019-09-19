@@ -4,7 +4,7 @@ import ru.basejava.iliketobreathe.model.Resume;
 
 import java.util.*;
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
 
     private Map<String, Resume> storage = new HashMap<>();
 
@@ -14,28 +14,28 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return storage.containsKey(searchKey.toString());
+    protected boolean isExist(String searchKey) {
+        return storage.containsKey(searchKey);
     }
 
     @Override
-    protected void updateElement(Resume resume, Object searchKey) {
-        storage.put(searchKey.toString(), resume);
+    protected void updateElement(Resume resume, String searchKey) {
+        storage.put(searchKey, resume);
     }
 
     @Override
-    protected void saveInStorage(Resume resume, Object searchKey) {
-        storage.put(searchKey.toString(), resume);
+    protected void saveInStorage(Resume resume, String searchKey) {
+        storage.put(searchKey, resume);
     }
 
     @Override
-    protected void deleteFromStorage(Object searchKey) {
-        storage.remove(searchKey.toString());
+    protected void deleteFromStorage(String searchKey) {
+        storage.remove(searchKey);
     }
 
     @Override
-    protected Resume getElement(Object searchKey) {
-        return storage.get(searchKey.toString());
+    protected Resume getElement(String searchKey) {
+        return storage.get(searchKey);
     }
 
     @Override
