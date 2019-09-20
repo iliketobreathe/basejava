@@ -2,20 +2,20 @@ package ru.basejava.iliketobreathe.model;
 
 import java.util.List;
 
-public class OrgSection extends Section {
-    private final List<Org> organizations;
+public class OrganizationSection extends AbstractSection {
+    private final List<Organization> organizations;
 
-    public OrgSection(List<Org> organizations) {
+    public OrganizationSection(List<Organization> organizations) {
         this.organizations = organizations;
     }
 
-    public List<Org> getOrganizations() {
+    public List<Organization> getOrganizations() {
         return organizations;
     }
 
     @Override
     public String toString() {
-        return "OrgSection{" +
+        return "OrganizationSection{" +
                 "organizations=" + organizations +
                 '}';
     }
@@ -25,7 +25,7 @@ public class OrgSection extends Section {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrgSection that = (OrgSection) o;
+        OrganizationSection that = (OrganizationSection) o;
 
         return organizations.equals(that.organizations);
     }

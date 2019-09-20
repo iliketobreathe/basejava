@@ -2,7 +2,7 @@ package ru.basejava.iliketobreathe.model;
 
 import java.util.List;
 
-public class ListSection extends Section {
+public class ListSection extends AbstractSection {
     private final List<String> elements;
 
     public ListSection(List<String> elements) {

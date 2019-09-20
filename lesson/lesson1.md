@@ -9,7 +9,7 @@
 - Установите [IntelliJ IDEA](http://www.jetbrains.com/idea/download/index.html). **Пока нет базы данных и веб, можно работать с версией Community**. На версию Ultimate дается 30 дней пробного бесплатного использования (trial).  На проектах каждый участник проектов получает единоразовый личный купон на бесплатную версию Ultimate на 6 месяцев.
 
 ## ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 1. [Разработка ПО](https://drive.google.com/open?id=0B_4NpoQW1xfpVjZUTEpvVUN1TTA)
-- [Мифический человеко-месяц](https://ru.wikipedia.org/wiki/Мифический_человеко-месяц) (wiki)
+- [Мифический человеко-месяц](https://ru.wikipedia.organization/wiki/Мифический_человеко-месяц) (wiki)
 - [Размеры проектов в количестве строк кода [eng]](https://medium.freecodecamp.com/the-biggest-codebases-in-history-a128bb3eea73)
 - [Соглашения по оформлению кода [eng]](https://google.github.io/styleguide/javaguide.html)
 - [Методологии разработки ПО](https://dou.ua/forums/topic/14015/)
@@ -26,7 +26,7 @@
   - [Типичный тест SQL на собеседованиях](https://habrahabr.ru/post/181033/)
 
 ## ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 3. [Обзор языка Java](https://drive.google.com/open?id=0B_4NpoQW1xfpTU5SSElhUjlGNnc)
-- [Java](http://ru.wikipedia.org/wiki/Java), [JVM](http://ru.wikipedia.org/wiki/Виртуальная_машина_Java), [JIT-компиляция](http://ru.wikipedia.org/wiki/JIT) (wiki)
+- [Java](http://ru.wikipedia.organization/wiki/Java), [JVM](http://ru.wikipedia.organization/wiki/Виртуальная_машина_Java), [JIT-компиляция](http://ru.wikipedia.organization/wiki/JIT) (wiki)
 - [Что такое JDK? Введение в средства разработки Java](https://topjava.ru/blog/what-is-the-jdk)
 - [Что такое JRE? Введение в среду выполнения Java](https://topjava.ru/blog/what-is-the-jre)
 - [Что такое Java? История создания](http://www.intuit.ru/studies/courses/16/16/lecture/27105)
@@ -34,7 +34,7 @@
 
 ![jvm](https://cloud.githubusercontent.com/assets/18701152/15219296/e6c67e86-186b-11e6-986f-651a87deec6c.png)
 
-- [ME](http://ru.wikipedia.org/wiki/Java_Platform,_Micro_Edition), [SE](https://ru.wikipedia.org/wiki/Java_Platform,_Standard_Edition), [EE](http://ru.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition) (wiki)
+- [ME](http://ru.wikipedia.organization/wiki/Java_Platform,_Micro_Edition), [SE](https://ru.wikipedia.organization/wiki/Java_Platform,_Standard_Edition), [EE](http://ru.wikipedia.organization/wiki/Java_Platform,_Enterprise_Edition) (wiki)
 - [Java Microbenchmark JMH](http://openjdk.java.net/projects/code-tools/jmh/) (используем на курсе [MasterJava](https://github.com/JavaWebinar/masterjava#Занятие-2))
 - [Oracle Java8 Home](http://docs.oracle.com/javase/8/docs/index.html)
 - **Дополнительно:**
@@ -46,12 +46,12 @@
 
 ![image](https://cloud.githubusercontent.com/assets/18701152/15219746/9295a2fe-186d-11e6-876b-c61cc9be71e4.png)
 
-  - [Система управления версиями](https://ru.wikipedia.org/wiki/Система_управления_версиями) (wiki)
+  - [Система управления версиями](https://ru.wikipedia.organization/wiki/Система_управления_версиями) (wiki)
   - [Сравнение разных VCS](https://biz30.timedoctor.com/ru/cистема-контроля-версий/)
   - [Git обучалка](https://githowto.com/ru)
-  - [Интерактивная Git обучалка (в настройках выберите русский язык)](http://learngitbranching.js.org)
+  - [Интерактивная Git обучалка (в настройках выберите русский язык)](http://learngitbranching.js.organization)
   - [Официальная книга про Git](https://git-scm.com/book/ru/v2)
-  - [Working with remote repositories](https://illustrated-git.readthedocs.org/en/latest/#working-with-remote-repositories)
+  - [Working with remote repositories](https://illustrated-git.readthedocs.organization/en/latest/#working-with-remote-repositories)
   - [Базовый курс по обучению Git](https://www.youtube.com/playlist?list=PLIU76b8Cjem5B3sufBJ_KFTpKkMEvaTQR) (youtube)
   - [Git. Быстрый старт](https://www.youtube.com/watch?v=4-NX17Ip-xQ&list=PLmRNNqEA7JoM77hOJkPrLOfJQGizCLR3P) (youtube)
   - [Подробное введение в работу с Git](https://tproger.ru/translations/beginner-git-cheatsheet/)

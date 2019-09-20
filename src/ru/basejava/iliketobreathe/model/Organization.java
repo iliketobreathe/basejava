@@ -2,7 +2,7 @@ package ru.basejava.iliketobreathe.model;
 
 import java.time.YearMonth;
 
-public class Org {
+public class Organization {
     private final String title;
     private final String description;
     private final String position;
@@ -10,7 +10,7 @@ public class Org {
     private final YearMonth startDate;
     private final YearMonth endDate;
 
-    public Org(String title, String description, String position, String webLink, YearMonth startDate, YearMonth endDate) {
+    public Organization(String title, String description, String position, String webLink, YearMonth startDate, YearMonth endDate) {
         this.title = title;
         this.description = description;
         this.position = position;
@@ -45,7 +45,7 @@ public class Org {
 
     @Override
     public String toString() {
-        return "Org{" +
+        return "Organization{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", position='" + position + '\'' +
@@ -60,14 +60,14 @@ public class Org {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Org org = (Org) o;
+        Organization organization = (Organization) o;
 
-        if (!title.equals(org.title)) return false;
-        if (!description.equals(org.description)) return false;
-        if (!position.equals(org.position)) return false;
-        if (!webLink.equals(org.webLink)) return false;
-        if (!startDate.equals(org.startDate)) return false;
-        return endDate.equals(org.endDate);
+        if (!title.equals(organization.title)) return false;
+        if (!description.equals(organization.description)) return false;
+        if (!position.equals(organization.position)) return false;
+        if (!webLink.equals(organization.webLink)) return false;
+        if (!startDate.equals(organization.startDate)) return false;
+        return endDate.equals(organization.endDate);
     }
 
     @Override

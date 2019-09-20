@@ -1,9 +1,6 @@
 package ru.basejava.iliketobreathe.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -13,8 +10,8 @@ public class Resume implements Comparable<Resume> {
     private final String uuid;
     private final String fullName;
 
-    private final Map<ContactType, String> contacts = new HashMap<>();
-    private final Map<SectionType, Section> sections = new HashMap<>();
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -39,7 +36,7 @@ public class Resume implements Comparable<Resume> {
         return contacts.get(type);
     }
 
-    public Section getSection(SectionType type) {
+    public AbstractSection getSection(SectionType type) {
         return sections.get(type);
     }
 
@@ -47,7 +44,7 @@ public class Resume implements Comparable<Resume> {
         contacts.put(contactType, contact);
     }
 
-    public void setSection(SectionType sectionType, Section section) {
+    public void setSection(SectionType sectionType, AbstractSection section) {
         sections.put(sectionType, section);
     }
 
@@ -59,13 +56,17 @@ public class Resume implements Comparable<Resume> {
         Resume resume = (Resume) o;
 
         if (!uuid.equals(resume.uuid)) return false;
-        return fullName.equals(resume.fullName);
+        if (!fullName.equals(resume.fullName)) return false;
+        if (!contacts.equals(resume.contacts)) return false;
+        return sections.equals(resume.sections);
     }
 
     @Override
     public int hashCode() {
         int result = uuid.hashCode();
         result = 31 * result + fullName.hashCode();
+        result = 31 * result + contacts.hashCode();
+        result = 31 * result + sections.hashCode();
         return result;
     }
 
@@ -76,7 +77,7 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public int compareTo(Resume o) {
-        int compareReturn = this.fullName.compareTo(o.fullName);
-        return  compareReturn != 0 ? compareReturn : this.uuid.compareTo(o.uuid);
+        int compareReturn = fullName.compareTo(o.fullName);
+        return  compareReturn != 0 ? compareReturn : uuid.compareTo(o.uuid);
     }
 }

@@ -1,6 +1,6 @@
 package ru.basejava.iliketobreathe.model;
 
-public class StringSection extends Section {
+public class StringSection extends AbstractSection {
     private final String text;
 
     public StringSection(String text) {

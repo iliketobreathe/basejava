@@ -8,10 +8,10 @@
      -  в файловой системе (File API и <a href="http://www.quizful.net/post/java-nio-tutorial">Java 7 NIO File API</a>)
         - в стандартной и кастомной сериализации Java
         - в формате JSON (<a href="https://github.com/google/gson">Google Gson</a>)
-        - в формате XML (<a href="https://ru.wikipedia.org/wiki/Java_Architecture_for_XML_Binding">JAXB</a>)
-     -  в реляционной базе <a href="https://ru.wikipedia.org/wiki/PostgreSQL">PostgreSQL</a>
+        - в формате XML (<a href="https://ru.wikipedia.organization/wiki/Java_Architecture_for_XML_Binding">JAXB</a>)
+     -  в реляционной базе <a href="https://ru.wikipedia.organization/wiki/PostgreSQL">PostgreSQL</a>
   -  деплой веб приложения
-     - в контейнер сервлетов <a href="http://tomcat.apache.org/">Tomcat</a>
+     - в контейнер сервлетов <a href="http://tomcat.apache.organization/">Tomcat</a>
      - в облачный сервис <a href="https://www.heroku.com/">Heroku</a>
 
 Приложение будет разрабатываться начиная со первого занятия, основываясь на базовых темах курса:
@@ -19,7 +19,7 @@
 
 > Любое знание стоит воспринимать как подобие семантического дерева: убедитесь в том, что понимаете фундаментальные принципы, то есть ствол и крупные ветки, прежде чем лезть в мелкие листья-детали. Иначе последним не на чем будет держаться.
 
-[*— Илон Маск](https://ru.wikipedia.org/wiki/Маск,_Илон)
+[*— Илон Маск](https://ru.wikipedia.organization/wiki/Маск,_Илон)
 
 # Изучайте [первое открытое занятие](lesson/lesson1.md).
 ### Внизу урока есть первое домашнее задание, по которому можно оценить свой уровень готовности к проекту.
@@ -195,7 +195,7 @@
  - Домашнее задание
 
 ## Рекомендуемые книги
-- <a href="http://myflex.org/books/java4kids/java4kids.htm">YAKOV FAIN: Программирование на Java для начинающих</a>
+- <a href="http://myflex.organization/books/java4kids/java4kids.htm">YAKOV FAIN: Программирование на Java для начинающих</a>
 - <a href="https://habrahabr.ru/post/153373/">Книги по Java: от новичка до профессионала</a>
 - <a href="http://scanlibs.com/java-effektivnoe-programmirovanie-2-e-izdanie">Джошуа Блох: Java. Эффективное программирование, 2-е издание</a>
 - <a href="http://www.labirint.ru/books/87603/">Гамма, Хелм, Джонсон: Приемы объектно-ориентированного проектирования. Паттерны проектирования</a>
@@ -203,6 +203,6 @@
 
 ##  Ресуры в сети
 - [Руководство по Java Core](http://proselyte.net/tutorials/java-core/)
-- [Java. Базовый курс](https://stepik.org/course/Java-Базовый-курс-187)
+- [Java. Базовый курс](https://stepik.organization/course/Java-Базовый-курс-187)
 - <a href="http://www.intuit.ru/studies/courses/16/16/info">intuit: Программирование на Java</a>
 - <a href="http://sernam.ru/book_java.php">Основы программирования на Java: учебное пособие</a>
