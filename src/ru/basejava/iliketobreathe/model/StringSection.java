@@ -1,9 +1,12 @@
 package ru.basejava.iliketobreathe.model;
 
+import java.util.Objects;
+
 public class StringSection extends AbstractSection {
     private final String text;
 
     public StringSection(String text) {
+        Objects.requireNonNull(text, "text must not be null");
         this.text = text;
     }
 

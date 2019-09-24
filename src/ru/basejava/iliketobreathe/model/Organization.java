@@ -1,57 +1,35 @@
 package ru.basejava.iliketobreathe.model;
 
-import java.time.YearMonth;
+import java.time.LocalDate;
+import java.util.Objects;
 
 public class Organization {
+    private final Link homePage;
+
+    private final LocalDate startDate;
+    private final LocalDate endDate;
     private final String title;
     private final String description;
-    private final String position;
-    private final String webLink;
-    private final YearMonth startDate;
-    private final YearMonth endDate;
 
-    public Organization(String title, String description, String position, String webLink, YearMonth startDate, YearMonth endDate) {
-        this.title = title;
-        this.description = description;
-        this.position = position;
-        this.webLink = webLink;
+    public Organization(String name, String url, LocalDate startDate, LocalDate endDate, String title, String description) {
+        Objects.requireNonNull(startDate, "startDate must not be null");
+        Objects.requireNonNull(endDate, "endDate must not be null");
+        Objects.requireNonNull(title, "title must not be null");
+        this.homePage = new Link(name, url);
         this.startDate = startDate;
         this.endDate = endDate;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public String getWebLink() {
-        return webLink;
-    }
-
-    public YearMonth getStartDate() {
-        return startDate;
-    }
-
-    public YearMonth getEndDate() {
-        return endDate;
+        this.title = title;
+        this.description = description;
     }
 
     @Override
     public String toString() {
         return "Organization{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", position='" + position + '\'' +
-                ", webLink='" + webLink + '\'' +
+                "homePage=" + homePage +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 
@@ -60,24 +38,22 @@ public class Organization {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Organization organization = (Organization) o;
+        Organization that = (Organization) o;
 
-        if (!title.equals(organization.title)) return false;
-        if (!description.equals(organization.description)) return false;
-        if (!position.equals(organization.position)) return false;
-        if (!webLink.equals(organization.webLink)) return false;
-        if (!startDate.equals(organization.startDate)) return false;
-        return endDate.equals(organization.endDate);
+        if (!homePage.equals(that.homePage)) return false;
+        if (!startDate.equals(that.startDate)) return false;
+        if (!endDate.equals(that.endDate)) return false;
+        if (!title.equals(that.title)) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
     }
 
     @Override
     public int hashCode() {
-        int result = title.hashCode();
-        result = 31 * result + description.hashCode();
-        result = 31 * result + position.hashCode();
-        result = 31 * result + webLink.hashCode();
+        int result = homePage.hashCode();
         result = 31 * result + startDate.hashCode();
         result = 31 * result + endDate.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
 }

@@ -1,11 +1,13 @@
 package ru.basejava.iliketobreathe.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends AbstractSection {
     private final List<String> elements;
 
     public ListSection(List<String> elements) {
+        Objects.requireNonNull(elements, "elements must not be null");
         this.elements = elements;
     }
 

@@ -2,7 +2,7 @@ package ru.basejava.iliketobreathe;
 
 import ru.basejava.iliketobreathe.model.*;
 
-import java.time.YearMonth;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,16 +34,11 @@ public class ResumeTestData {
                 "Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
-        List<Organization> organizations = Arrays.asList(new Organization("Alcatel", "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).", "Инженер по аппаратному и программному тестированию",
-                        "http://www.alcatel.ru/", YearMonth.of(1997, 7), YearMonth.of(2005, 1)),
-                new Organization("Siemens AG", "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).", "Разработчик ПО", "https://www.siemens.com/ru/ru/home.html",
-                        YearMonth.of(2005, 1), YearMonth.of(2007, 2)));
+        List<Organization> organizations = Arrays.asList(new Organization("Alcatel", "http://www.alcatel.ru/", LocalDate.of(1997, 7, 1), LocalDate.of(2005, 1, 1), "Инженер по аппаратному и программному тестированию", "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."));
         resume.setSection(SectionType.EXPERIENCE, new OrganizationSection(organizations));
 
-        List<Organization> education = Arrays.asList(new Organization("Заочная физико-техническая школа при МФТИ", "Закончил с отличием", "Студент", "http://www.school.mipt.ru/",
-                        YearMonth.of(1984, 9), YearMonth.of(1987, 6)),
-                new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "программист Fortran, C", "Инженер", "http://www.ifmo.ru/",
-                        YearMonth.of(1987, 9), YearMonth.of(1993, 7)));
+        List<Organization> education = Arrays.asList(new Organization("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/",
+                        LocalDate.of(1984, 9, 1), LocalDate.of(1987, 6, 1), "Студент", ""));
         resume.setSection(SectionType.EDUCATION, new OrganizationSection(education));
     }
 }
