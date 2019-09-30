@@ -15,7 +15,7 @@ public class MainFile {
             throw new RuntimeException("Error", e);
         }
 
-        File dir = new File("./src/ru/javawebinar/basejava");
+        File dir = new File("./src/ru/basejava/iliketobreathe");
         System.out.println(dir.isDirectory());
         String[] list = dir.list();
         if (list != null) {
@@ -30,11 +30,11 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        File path2 = new File("C:\\Users\\Александр\\basejava\\src\\ru\\basejava\\iliketobreathe");
-        printDirsAndFiles(path2);
+        File path2 = new File("./src/ru/basejava/iliketobreathe");
+        printNames(path2);
     }
 
-    public static void printDirsAndFiles(File path) {
+    public static void printNames(File path) {
         File[] fileList = path.listFiles();
         if (fileList != null) {
             for (File f : fileList) {
@@ -44,7 +44,7 @@ public class MainFile {
                 else if (f.isDirectory()) {
                     System.out.println("----------------------------");
                     System.out.println("Directory: " + f.getName());
-                    printDirsAndFiles(f);
+                    printNames(f);
                     System.out.println("----------------------------");
                 }
             }

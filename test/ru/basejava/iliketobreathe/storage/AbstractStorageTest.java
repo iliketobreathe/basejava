@@ -25,10 +25,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private Resume resume1 = ResumeTestData.resumeFiller(UUID_1, "Name1");
-    private Resume resume2 = ResumeTestData.resumeFiller(UUID_2, "Name2");
-    private Resume resume3 = ResumeTestData.resumeFiller(UUID_3, "Name3");
-    private Resume resume4 = ResumeTestData.resumeFiller(UUID_4, "Name4");
+    private Resume resume1 = ResumeTestData.resumeFill(UUID_1, "Name1");
+    private Resume resume2 = ResumeTestData.resumeFill(UUID_2, "Name2");
+    private Resume resume3 = ResumeTestData.resumeFill(UUID_3, "Name3");
+    private Resume resume4 = ResumeTestData.resumeFill(UUID_4, "Name4");
 
     @Before
     public void setUp() throws Exception {
