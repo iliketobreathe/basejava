@@ -3,6 +3,7 @@ package ru.basejava.iliketobreathe.storage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ru.basejava.iliketobreathe.ResumeTestData;
 import ru.basejava.iliketobreathe.exception.ExistStorageException;
 import ru.basejava.iliketobreathe.exception.NotExistStorageException;
 import ru.basejava.iliketobreathe.model.Resume;
@@ -24,10 +25,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private Resume resume1 = new Resume(UUID_1, "Name1");
-    private Resume resume2 = new Resume(UUID_2, "Name2");
-    private Resume resume3 = new Resume(UUID_3, "Name3");
-    private Resume resume4 = new Resume(UUID_4, "Name4");
+    private Resume resume1 = ResumeTestData.resumeFiller(UUID_1, "Name1");
+    private Resume resume2 = ResumeTestData.resumeFiller(UUID_2, "Name2");
+    private Resume resume3 = ResumeTestData.resumeFiller(UUID_3, "Name3");
+    private Resume resume4 = ResumeTestData.resumeFiller(UUID_4, "Name4");
 
     @Before
     public void setUp() throws Exception {
@@ -57,7 +58,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_3, "New Name ");
+        Resume newResume = new Resume(UUID_3, "New Name");
         storage.update(newResume);
         Assert.assertEquals(newResume, storage.get(UUID_3));
     }

@@ -29,5 +29,25 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        File path2 = new File("C:\\Users\\Александр\\basejava\\src\\ru\\basejava\\iliketobreathe");
+        printDirsAndFiles(path2);
+    }
+
+    public static void printDirsAndFiles(File path) {
+        File[] fileList = path.listFiles();
+        if (fileList != null) {
+            for (File f : fileList) {
+                if (f.isFile()) {
+                    System.out.println("FIle: " + f.getName());
+                }
+                else if (f.isDirectory()) {
+                    System.out.println("----------------------------");
+                    System.out.println("Directory: " + f.getName());
+                    printDirsAndFiles(f);
+                    System.out.println("----------------------------");
+                }
+            }
+        }
     }
 }

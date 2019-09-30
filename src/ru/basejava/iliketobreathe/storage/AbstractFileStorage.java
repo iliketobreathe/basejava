@@ -5,11 +5,12 @@ import ru.basejava.iliketobreathe.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
-    File directory;
+    private final File directory;
 
     public AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -34,6 +35,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void updateElement(Resume resume, File file) {
+        try {
+            writeInStorage(resume, file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(),e);
+        }
 
     }
 
@@ -52,26 +58,51 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void deleteFromStorage(File file) {
-
+        if (!file.delete()) {
+            throw new StorageException("IO error", file.getName());
+        }
     }
 
     @Override
     protected Resume getElement(File file) {
-        return null;
+        try {
+            return readFromStorage(file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
+
+    protected abstract Resume readFromStorage(File file) throws IOException;
 
     @Override
     protected List<Resume> getAll() {
-        return null;
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("IO error", null);
+        }
+        List<Resume> fileList = new ArrayList<>();
+        for (File file : files) {
+            fileList.add(getElement(file));
+        }
+        return fileList;
     }
 
     @Override
     public void clear() {
-
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                deleteFromStorage(file);
+            }
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        String[] fileList = directory.list();
+        if (fileList == null) {
+            throw new StorageException("IO error", null);
+        }
+        return fileList.length;
     }
 }
