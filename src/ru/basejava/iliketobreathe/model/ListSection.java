@@ -1,10 +1,17 @@
 package ru.basejava.iliketobreathe.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends AbstractSection {
+    private static final long serialVersionUID = 1L;
+
     private final List<String> elements;
+
+    public ListSection(String... elements) {
+        this(Arrays.asList(elements));
+    }
 
     public ListSection(List<String> elements) {
         Objects.requireNonNull(elements, "elements must not be null");

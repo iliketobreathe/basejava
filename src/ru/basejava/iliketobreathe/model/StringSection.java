@@ -3,6 +3,8 @@ package ru.basejava.iliketobreathe.model;
 import java.util.Objects;
 
 public class StringSection extends AbstractSection {
+    private static final long serialVersionUID = 1L;
+
     private final String text;
 
     public StringSection(String text) {

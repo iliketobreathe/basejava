@@ -1,15 +1,28 @@
 package ru.basejava.iliketobreathe.model;
 
+import ru.basejava.iliketobreathe.util.DateUtil;
+
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Organization {
+import static ru.basejava.iliketobreathe.util.DateUtil.NOW;
+
+public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final Link homePage;
     private List<Period> periods;
 
-    public Organization(String name, String url, List<Period> periods) {
-        this.homePage = new Link(name, url);
+    public Organization(String name, String url, Period... periods) {
+        this(new Link(name, url), Arrays.asList(periods));
+    }
+
+    public Organization(Link homePage, List<Period> periods) {
+        this.homePage = homePage;
         this.periods = periods;
     }
 
@@ -39,11 +52,19 @@ public class Organization {
                 '}';
     }
 
-    public static class Period {
+    public static class Period implements Serializable {
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String title;
         private final String description;
+
+        public Period(int startYear, Month startMonth, String title, String description) {
+            this(DateUtil.of(startYear, startMonth), NOW, title, description);
+        }
+
+        public Period(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
+            this(DateUtil.of(startYear, startMonth), DateUtil.of(endYear, endMonth), title, description);
+        }
 
         public Period(LocalDate startDate, LocalDate endDate, String title, String description) {
             Objects.requireNonNull(startDate, "startDate must not be null");

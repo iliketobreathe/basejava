@@ -8,17 +8,16 @@ import ru.basejava.iliketobreathe.exception.ExistStorageException;
 import ru.basejava.iliketobreathe.exception.NotExistStorageException;
 import ru.basejava.iliketobreathe.model.Resume;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
-    protected Storage storage;
+    protected static final File STORAGE_DIR = new File("C:\\Users\\Александр\\basejava\\storage");
 
-    public AbstractStorageTest(Storage storage) {
-        this.storage = storage;
-    }
+    protected Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -29,6 +28,10 @@ public abstract class AbstractStorageTest {
     private Resume resume2 = ResumeTestData.resumeFill(UUID_2, "Name2");
     private Resume resume3 = ResumeTestData.resumeFill(UUID_3, "Name3");
     private Resume resume4 = ResumeTestData.resumeFill(UUID_4, "Name4");
+
+    public AbstractStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     @Before
     public void setUp() throws Exception {

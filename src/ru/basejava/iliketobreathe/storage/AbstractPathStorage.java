@@ -4,48 +4,49 @@ import ru.basejava.iliketobreathe.exception.StorageException;
 import ru.basejava.iliketobreathe.model.Resume;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
-    private final File directory;
+public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+    private final Path directory;
 
-    public AbstractFileStorage(File directory) {
+    public AbstractPathStorage(String dir) {
+        directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
-        this.directory = directory;
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
-        }
-        if (!directory.canRead() || !directory.canWrite()) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
+        if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
+            throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
     }
 
     protected abstract void writeInStorage(Resume resume, OutputStream os) throws IOException;
+
     protected abstract Resume readFromStorage(InputStream is) throws IOException;
 
     @Override
-    protected File getSearchKey(String uuid) {
-        return new File(directory, uuid);
+    protected Path getSearchKey(String uuid) {
+        return new Path(directory, uuid);
     }
 
     @Override
-    protected boolean isExist(File file) {
+    protected boolean isExist(Path file) {
         return file.exists();
     }
 
     @Override
-    protected void updateElement(Resume resume, File file) {
+    protected void updateElement(Resume resume, Path file) {
         try {
             writeInStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("File write error", resume.getUuid(), e);
+            throw new StorageException("Path write error", resume.getUuid(), e);
         }
     }
 
     @Override
-    protected void saveInStorage(Resume resume, File file) {
+    protected void saveInStorage(Resume resume, Path file) {
         try {
             file.createNewFile();
         } catch (IOException e) {
@@ -55,29 +56,29 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void deleteFromStorage(File file) {
+    protected void deleteFromStorage(Path file) {
         if (!file.delete()) {
-            throw new StorageException("File delete error", file.getName());
+            throw new StorageException("Path delete error", file.getName());
         }
     }
 
     @Override
-    protected Resume getElement(File file) {
+    protected Resume getElement(Path file) {
         try {
             return readFromStorage(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("File read error", file.getName(), e);
+            throw new StorageException("Path read error", file.getName(), e);
         }
     }
 
     @Override
     protected List<Resume> getAll() {
-        File[] files = directory.listFiles();
+        Path[] files = directory.listFiles();
         if (files == null) {
             throw new StorageException("Directory read error", null);
         }
         List<Resume> fileList = new ArrayList<>();
-        for (File file : files) {
+        for (Path file : files) {
             fileList.add(getElement(file));
         }
         return fileList;
@@ -85,11 +86,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                deleteFromStorage(file);
-            }
+        try {
+            Files.list(directory).forEach(this::deleteFromStorage);
+        } catch (IOException e) {
+            throw new StorageException("Path delete error", null);
         }
     }
 
