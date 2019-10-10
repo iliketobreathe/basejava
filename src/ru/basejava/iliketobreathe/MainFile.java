@@ -31,21 +31,21 @@ public class MainFile {
         }
 
         File path2 = new File("./src/ru/basejava/iliketobreathe");
-        printNames(path2);
+        printNames(path2, "");
     }
 
-    public static void printNames(File path) {
+    public static void printNames(File path, String indent) {
         File[] fileList = path.listFiles();
         if (fileList != null) {
             for (File f : fileList) {
                 if (f.isFile()) {
-                    System.out.println("FIle: " + f.getName());
+                    System.out.println(indent + "FIle: " + f.getName());
                 }
                 else if (f.isDirectory()) {
-                    System.out.println("----------------------------");
-                    System.out.println("Directory: " + f.getName());
-                    printNames(f);
-                    System.out.println("----------------------------");
+                    System.out.println();
+                    System.out.println(indent + "Directory: " + f.getName());
+                    printNames(f, "   " + indent);
+                    System.out.println();
                 }
             }
         }

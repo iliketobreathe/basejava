@@ -5,9 +5,9 @@ import ru.basejava.iliketobreathe.model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamStorage extends AbstractFileStorage {
+public class ObjectStreamPathStorage extends AbstractPathStorage {
 
-    public ObjectStreamStorage(File directory) {
+    public ObjectStreamPathStorage(String directory) {
         super(directory);
     }
 
