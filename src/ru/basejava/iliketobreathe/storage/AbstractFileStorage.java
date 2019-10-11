@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class AbstractFileStorage extends AbstractStorage<File> {
     private final File directory;
 
-    public AbstractFileStorage(File directory) {
+    private Serializer serializer;
+
+    public AbstractFileStorage(File directory, Serializer serializer) {
         Objects.requireNonNull(directory, "directory must not be null");
         this.directory = directory;
         if (!directory.isDirectory()) {
@@ -20,10 +22,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         if (!directory.canRead() || !directory.canWrite()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
-    }
 
-    protected abstract void writeInStorage(Resume resume, OutputStream os) throws IOException;
-    protected abstract Resume readFromStorage(InputStream is) throws IOException;
+        this.serializer = serializer;
+    }
 
     @Override
     protected File getSearchKey(String uuid) {
@@ -38,7 +39,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void updateElement(Resume resume, File file) {
         try {
-            writeInStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            serializer.writeInStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid(), e);
         }
@@ -64,7 +65,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getElement(File file) {
         try {
-            return readFromStorage(new BufferedInputStream(new FileInputStream(file)));
+            return serializer.readFromStorage(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File read error", file.getName(), e);
         }

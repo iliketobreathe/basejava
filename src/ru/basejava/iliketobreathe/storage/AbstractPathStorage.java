@@ -11,20 +11,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class AbstractPathStorage extends AbstractStorage<Path> {
     private final Path directory;
 
-    public AbstractPathStorage(String dir) {
+    private Serializer serializer;
+
+    public AbstractPathStorage(String dir, Serializer serializer) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
+        this.serializer = serializer;
     }
-
-    protected abstract void writeInStorage(Resume resume, OutputStream os) throws IOException;
-
-    protected abstract Resume readFromStorage(InputStream is) throws IOException;
 
     @Override
     protected Path getSearchKey(String uuid) {
@@ -39,7 +38,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void updateElement(Resume resume, Path path) {
         try {
-            writeInStorage(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            serializer.writeInStorage(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Path write error", resume.getUuid(), e);
         }
@@ -67,7 +66,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume getElement(Path path) {
         try {
-            return readFromStorage(new BufferedInputStream(new BufferedInputStream(Files.newInputStream(path))));
+            return serializer.readFromStorage(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Path read error", null, e);
         }

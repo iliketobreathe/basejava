@@ -2,6 +2,6 @@ package ru.basejava.iliketobreathe.storage;
 
 public class ObjectStreamFileStorageTest extends AbstractStorageTest {
     public ObjectStreamFileStorageTest() {
-        super(new ObjectStreamFileStorage(STORAGE_DIR));
+        super(new AbstractFileStorage(STORAGE_DIR, new ObjectStreamStorage()));
     }
 }
