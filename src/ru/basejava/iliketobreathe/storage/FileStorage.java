@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private final File directory;
 
     private Serializer serializer;
 
-    public AbstractFileStorage(File directory, Serializer serializer) {
+    public FileStorage(File directory, Serializer serializer) {
         Objects.requireNonNull(directory, "directory must not be null");
         this.directory = directory;
         if (!directory.isDirectory()) {
