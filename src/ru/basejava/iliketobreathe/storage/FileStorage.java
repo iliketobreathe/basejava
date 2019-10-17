@@ -2,6 +2,7 @@ package ru.basejava.iliketobreathe.storage;
 
 import ru.basejava.iliketobreathe.exception.StorageException;
 import ru.basejava.iliketobreathe.model.Resume;
+import ru.basejava.iliketobreathe.storage.serializer.StreamSerializer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ import java.util.Objects;
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
 
-    private Serializer serializer;
+    private StreamSerializer streamSerializer;
 
-    public FileStorage(File directory, Serializer serializer) {
+    public FileStorage(File directory, StreamSerializer streamSerializer) {
         Objects.requireNonNull(directory, "directory must not be null");
         this.directory = directory;
         if (!directory.isDirectory()) {
@@ -23,7 +24,7 @@ public class FileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
 
-        this.serializer = serializer;
+        this.streamSerializer = streamSerializer;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void updateElement(Resume resume, File file) {
         try {
-            serializer.writeInStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            streamSerializer.writeInStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid(), e);
         }
@@ -65,7 +66,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getElement(File file) {
         try {
-            return serializer.readFromStorage(new BufferedInputStream(new FileInputStream(file)));
+            return streamSerializer.readFromStorage(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File read error", file.getName(), e);
         }
@@ -75,7 +76,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected List<Resume> getAll() {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException("Directory read error", null);
+            throw new StorageException("Directory read error");
         }
         List<Resume> fileList = new ArrayList<>();
         for (File file : files) {
@@ -98,7 +99,7 @@ public class FileStorage extends AbstractStorage<File> {
     public int size() {
         String[] fileList = directory.list();
         if (fileList == null) {
-            throw new StorageException("Directory read error", null);
+            throw new StorageException("Directory read error");
         }
         return fileList.length;
     }

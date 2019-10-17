@@ -1,11 +1,11 @@
-package ru.basejava.iliketobreathe.storage;
+package ru.basejava.iliketobreathe.storage.serializer;
 
 import ru.basejava.iliketobreathe.exception.StorageException;
 import ru.basejava.iliketobreathe.model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamStorage implements Serializer {
+public class ObjectStreamSerializer implements StreamSerializer {
 
     @Override
     public void writeInStorage(Resume resume, OutputStream os) throws IOException {
