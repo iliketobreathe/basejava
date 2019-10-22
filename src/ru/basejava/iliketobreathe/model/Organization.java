@@ -34,6 +34,14 @@ public class Organization implements Serializable {
         this.periods = periods;
     }
 
+    public Link getHomePage() {
+        return homePage;
+    }
+
+    public List<Period> getPeriods() {
+        return periods;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
