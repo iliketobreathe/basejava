@@ -4,9 +4,7 @@ import ru.basejava.iliketobreathe.model.*;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataStreamSerializer implements StreamSerializer {
 
@@ -18,51 +16,41 @@ public class DataStreamSerializer implements StreamSerializer {
             dos.writeUTF(resume.getFullName());
 
             Map<ContactType, String> contacts = resume.getContacts();
-            dos.writeInt(contacts.size());
-            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
-                dos.writeUTF(entry.getKey().name());
-                dos.writeUTF(entry.getValue());
-            }
+
+            writeCollection(dos, contacts.entrySet(), (contactTypeStringEntry) -> {
+                dos.writeUTF(contactTypeStringEntry.getKey().name());
+                dos.writeUTF(contactTypeStringEntry.getValue());
+            });
 
             Map<SectionType, AbstractSection> sections = resume.getSections();
-            dos.writeInt(sections.size());
-            for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
-                SectionType sectionType = entry.getKey();
+
+            writeCollection(dos, sections.entrySet(), (sectionTypeAbstractSectionEntry) -> {
+                SectionType sectionType = sectionTypeAbstractSectionEntry.getKey();
+                AbstractSection section = sectionTypeAbstractSectionEntry.getValue();
                 dos.writeUTF(sectionType.name());
                 switch (sectionType) {
                     case PERSONAL:
                     case OBJECTIVE:
-                        dos.writeUTF(((StringSection) entry.getValue()).getText());
+                        dos.writeUTF(((StringSection)section).getText());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        ListSection listSection = (ListSection) entry.getValue();
-                        dos.writeInt(listSection.getElements().size());
-                        for (String s : listSection.getElements()) {
-                            dos.writeUTF(s);
-                        }
+                        writeCollection(dos, ((ListSection)section).getElements(), dos::writeUTF);
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        OrganizationSection organizationSection = (OrganizationSection) entry.getValue();
-                        dos.writeInt(organizationSection.getOrganizations().size());
-                        for (Organization o : organizationSection.getOrganizations()) {
-                            dos.writeUTF(o.getHomePage().getName());
-                            dos.writeUTF(o.getHomePage().getUrl());
-                            List<Organization.Period> periods = o.getPeriods();
-                            dos.writeInt(periods.size());
-                            for (Organization.Period p : periods) {
-                                dos.writeInt(p.getStartDate().getYear());
-                                dos.writeInt(p.getStartDate().getMonth().getValue());
-                                dos.writeInt(p.getEndDate().getYear());
-                                dos.writeInt(p.getEndDate().getMonth().getValue());
-                                dos.writeUTF(p.getTitle());
-                                dos.writeUTF(p.getDescription());
-                            }
-                        }
+                        writeCollection(dos, ((OrganizationSection)section).getOrganizations(), (organization) -> {
+                            dos.writeUTF(organization.getHomePage().getName());
+                            dos.writeUTF(organization.getHomePage().getUrl());
+                            writeCollection(dos, organization.getPeriods(), (period) -> {
+                                writeDate(dos, period);
+                                dos.writeUTF(period.getTitle());
+                                dos.writeUTF(period.getDescription());
+                            });
+                        });
                         break;
                 }
-            }
+            });
         }
     }
 
@@ -105,7 +93,7 @@ public class DataStreamSerializer implements StreamSerializer {
                             int periodSize = dis.readInt();
                             List<Organization.Period> periods = new ArrayList<>(periodSize);
                             for (int k = 0; k < periodSize; k++) {
-                                periods.add(new Organization.Period(LocalDate.of(dis.readInt(), dis.readInt(), 1), LocalDate.of(dis.readInt(), dis.readInt(), 1), dis.readUTF(), dis.readUTF()));
+                                periods.add(new Organization.Period(readDate(dis), readDate(dis), dis.readUTF(), dis.readUTF()));
                             }
                             organizations.add(new Organization(link, periods));
                         }
@@ -114,6 +102,28 @@ public class DataStreamSerializer implements StreamSerializer {
                 }
             }
             return resume;
+        }
+    }
+
+    private void writeDate(DataOutputStream dos, Organization.Period p) throws IOException {
+        dos.writeInt(p.getStartDate().getYear());
+        dos.writeInt(p.getStartDate().getMonth().getValue());
+        dos.writeInt(p.getEndDate().getYear());
+        dos.writeInt(p.getEndDate().getMonth().getValue());
+    }
+
+    private LocalDate readDate(DataInputStream dis) throws IOException {
+        return LocalDate.of(dis.readInt(), dis.readInt(), 1);
+    }
+
+    private interface DataExporter<T> {
+        void export(T t) throws IOException;
+    }
+
+    private <T> void writeCollection(DataOutputStream dos, Collection<T> collection, DataExporter<T> dataExporter) throws IOException {
+        dos.writeInt(collection.size());
+        for (T element : collection) {
+            dataExporter.export(element);
         }
     }
 }
