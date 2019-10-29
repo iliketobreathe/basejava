@@ -1,16 +1,18 @@
 package ru.basejava.iliketobreathe.storage.serializer;
 
+import ru.basejava.iliketobreathe.exception.StorageException;
 import ru.basejava.iliketobreathe.model.*;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
-public class DataStreamSerializer<T> implements StreamSerializer {
+public class DataStreamSerializer implements StreamSerializer {
 
     @Override
     public void writeInStorage(Resume resume, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
+
 
             dos.writeUTF(resume.getUuid());
             dos.writeUTF(resume.getFullName());
@@ -66,22 +68,7 @@ public class DataStreamSerializer<T> implements StreamSerializer {
 
             readData(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
-                switch (sectionType) {
-                    case PERSONAL:
-                    case OBJECTIVE:
-                        resume.setSection(sectionType, new StringSection(dis.readUTF()));
-                        break;
-                    case ACHIEVEMENT:
-                    case QUALIFICATIONS:
-                        resume.setSection(sectionType, new ListSection(readListFromData(dis, dis::readUTF)));
-                        break;
-                    case EXPERIENCE:
-                    case EDUCATION:
-                        resume.setSection(sectionType, new OrganizationSection(readListFromData(dis, () ->
-                                new Organization(new Link(dis.readUTF(), dis.readUTF()), readListFromData(dis, () ->
-                                    new Organization.Period(readDate(dis), readDate(dis), dis.readUTF(), dis.readUTF()))))));
-                        break;
-                }
+                resume.setSection(sectionType, readSection(dis, sectionType));
             });
             return resume;
         }
@@ -115,6 +102,24 @@ public class DataStreamSerializer<T> implements StreamSerializer {
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
             dataImporter.importData();
+        }
+    }
+
+    private <T> AbstractSection readSection(DataInputStream dis, SectionType sectionType) throws IOException {
+        switch (sectionType) {
+            case PERSONAL:
+            case OBJECTIVE:
+                return new StringSection(dis.readUTF());
+            case ACHIEVEMENT:
+            case QUALIFICATIONS:
+                return new ListSection(readListFromData(dis, dis::readUTF));
+            case EXPERIENCE:
+            case EDUCATION:
+                return new OrganizationSection(readListFromData(dis, () ->
+                        new Organization(new Link(dis.readUTF(), dis.readUTF()), readListFromData(dis, () ->
+                                new Organization.Period(readDate(dis), readDate(dis), dis.readUTF(), dis.readUTF())))));
+            default:
+                throw new StorageException("Error of reading" + sectionType.name() + "from data", sectionType.name());
         }
     }
 
