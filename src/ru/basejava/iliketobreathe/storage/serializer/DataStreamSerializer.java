@@ -105,7 +105,7 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private <T> AbstractSection readSection(DataInputStream dis, SectionType sectionType) throws IOException {
+    private AbstractSection readSection(DataInputStream dis, SectionType sectionType) throws IOException {
         switch (sectionType) {
             case PERSONAL:
             case OBJECTIVE:

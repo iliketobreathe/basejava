@@ -13,32 +13,26 @@ public class DeadLock {
 
     private static class Thread1 extends Thread {
         public void run() {
-            synchronized (LOCK_1) {
-                System.out.println("Thread 1: holding LOCK_1...");
-
-                try { Thread.sleep(10); }
-                catch (InterruptedException e) {}
-                System.out.println("Thread 1: waiting for LOCK_2...");
-
-                synchronized (LOCK_2) {
-                    System.out.println("Thread 1: holding LOCK_1 & 2...");
-                }
-            }
+            sync(LOCK_1, LOCK_2);
         }
     }
 
     private static class Thread2 extends Thread {
         public void run() {
-            synchronized (LOCK_2) {
-                System.out.println("Thread 2: holding LOCK_2...");
+            sync(LOCK_2, LOCK_1);
+        }
+    }
 
-                try { Thread.sleep(10); }
-                catch (InterruptedException e) {}
-                System.out.println("Thread 2: waiting for LOCK_1...");
+    private static void sync (Object firstLock, Object secondLock) {
+        synchronized (firstLock) {
+            System.out.println("Thread 2: holding LOCK_2...");
 
-                synchronized (LOCK_1) {
-                    System.out.println("Thread 2: holding LOCK_1 & LOCK_2...");
-                }
+            try { Thread.sleep(10); }
+            catch (InterruptedException e) {}
+            System.out.println("Thread 2: waiting for LOCK_1...");
+
+            synchronized (secondLock) {
+                System.out.println("Thread 2: holding LOCK_1 & LOCK_2...");
             }
         }
     }
