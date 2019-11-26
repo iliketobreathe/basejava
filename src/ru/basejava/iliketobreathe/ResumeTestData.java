@@ -1,15 +1,11 @@
 package ru.basejava.iliketobreathe;
 
-import ru.basejava.iliketobreathe.model.*;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import ru.basejava.iliketobreathe.model.Resume;
 
 public class ResumeTestData {
     public static Resume resumeFill(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-        resume.setContact(ContactType.EMAIL, "yandex@yandex.ru");
+        /*resume.setContact(ContactType.EMAIL, "yandex@yandex.ru");
         resume.setContact(ContactType.PHONE, "+7 (999) 999-99-99");
         resume.setContact(ContactType.HOMEPAGE, "yandex.ru");
         resume.setContact(ContactType.GITHUB, "github777");
@@ -38,7 +34,7 @@ public class ResumeTestData {
 
         List<Organization> education = Arrays.asList(new Organization(new Link("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "http://www.ifmo.ru/"), Arrays.asList(new Organization.Period(LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)", ""),
                 new Organization.Period(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1), "Аспирантура (программист С, С++)", ""))));
-        resume.setSection(SectionType.EDUCATION, new OrganizationSection(education));
+        resume.setSection(SectionType.EDUCATION, new OrganizationSection(education));*/
 
         return resume;
     }
