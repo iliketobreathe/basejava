@@ -20,10 +20,10 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    private static final String UUID_1 = "uuid1                               ";
+    private static final String UUID_2 = "uuid2                               ";
+    private static final String UUID_3 = "uuid3                               ";
+    private static final String UUID_4 = "uuid4                               ";
 
     private Resume resume1 = ResumeTestData.resumeFill(UUID_1, "Name1");
     private Resume resume2 = ResumeTestData.resumeFill(UUID_2, "Name2");
