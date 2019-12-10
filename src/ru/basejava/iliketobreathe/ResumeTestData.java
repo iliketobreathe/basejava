@@ -1,16 +1,17 @@
 package ru.basejava.iliketobreathe;
 
+import ru.basejava.iliketobreathe.model.ContactType;
 import ru.basejava.iliketobreathe.model.Resume;
 
 public class ResumeTestData {
     public static Resume resumeFill(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-        /*resume.setContact(ContactType.EMAIL, "yandex@yandex.ru");
+        resume.setContact(ContactType.EMAIL, "yandex@yandex.ru");
         resume.setContact(ContactType.PHONE, "+7 (999) 999-99-99");
         resume.setContact(ContactType.HOMEPAGE, "yandex.ru");
         resume.setContact(ContactType.GITHUB, "github777");
 
-        resume.setSection(SectionType.PERSONAL, new StringSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+/*        resume.setSection(SectionType.PERSONAL, new StringSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         resume.setSection(SectionType.OBJECTIVE, new StringSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
 
