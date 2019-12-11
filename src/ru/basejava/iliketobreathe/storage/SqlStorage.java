@@ -96,17 +96,6 @@ public class SqlStorage implements Storage {
                         "    ORDER BY full_name, uuid",
                 ps -> {
                     ResultSet rs = ps.executeQuery();
-                    /*List<Resume> resumes = new ArrayList<>();
-                    while (rs.next()) {
-                        int size = resumes.size();
-                        if (size != 0 && rs.getString("uuid").equals(resumes.get(size - 1).getUuid())) {
-                            addContact(rs, resumes.get(size - 1));
-                        } else {
-                            Resume r = new Resume(rs.getString("uuid"), rs.getString("full_name"));
-                            addContact(rs, r);
-                            resumes.add(r);
-                        }
-                    }*/
                     Map<String, Resume> resumes = new LinkedHashMap<>();
                     while (rs.next()) {
                         String uuid = rs.getString("uuid");
