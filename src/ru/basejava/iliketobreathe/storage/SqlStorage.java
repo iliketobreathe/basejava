@@ -66,8 +66,8 @@ public class SqlStorage implements Storage {
                r = new Resume(uuid, rs.getString("full_name"));
             }
 
-            doGet(r, uuid, conn, "SELECT * FROM contact c WHERE c.resume_uuid = ?");
-            doGet(r, uuid, conn, "SELECT * FROM section s WHERE s.resume_uuid = ?");
+            doGet(r, uuid, conn, "SELECT * FROM contact c WHERE c.resume_uuid = ?", this::addContact);
+            doGet(r, uuid, conn, "SELECT * FROM section s WHERE s.resume_uuid = ?", this::addSection);
 
             return r;
         });
@@ -96,8 +96,8 @@ public class SqlStorage implements Storage {
                 }
             }
 
-            doGetAll(resumes, conn, "SELECT * FROM contact");
-            doGetAll(resumes, conn, "SELECT * FROM section");
+            doGetAll(resumes, conn, "SELECT * FROM contact", (this::addContact));
+            doGetAll(resumes, conn, "SELECT * FROM section", (this::addSection));
 
             return new ArrayList<>(resumes.values());
         });
@@ -181,36 +181,27 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void doGet(Resume r, String uuid, Connection conn, String sql) throws SQLException {
+    private void doGet(Resume r, String uuid, Connection conn, String sql, Adder adder) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, uuid);
             ResultSet rs = ps.executeQuery();
-            if (sql.contains("contact")) {
-                while (rs.next()) {
-                    addContact(rs, r);
-                }
-            } else {
-                while (rs.next()) {
-                    addSection(rs, r);
-                }
+            while (rs.next()) {
+                adder.execute(rs, r);
             }
         }
     }
 
-    private void doGetAll(Map<String, Resume> resumes, Connection conn, String sql) throws SQLException {
+    private void doGetAll(Map<String, Resume> resumes, Connection conn, String sql, Adder adder) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
-            if (sql.contains("contact")) {
-                while (rs.next()) {
-                    String uuid = rs.getString("resume_uuid");
-                    addContact(rs, resumes.get(uuid));
-                }
-            } else {
-                while (rs.next()) {
-                    String uuid = rs.getString("resume_uuid");
-                    addSection(rs, resumes.get(uuid));
-                }
+            while (rs.next()) {
+                Resume r = resumes.get(rs.getString("resume_uuid"));
+                adder.execute(rs, r);
             }
         }
+    }
+
+    public interface Adder {
+        void execute(ResultSet rs, Resume r) throws SQLException;
     }
 }
