@@ -3,6 +3,7 @@ package ru.basejava.iliketobreathe.storage;
 import ru.basejava.iliketobreathe.exception.NotExistStorageException;
 import ru.basejava.iliketobreathe.model.*;
 import ru.basejava.iliketobreathe.sql.SqlHelper;
+import ru.basejava.iliketobreathe.util.JsonParser;
 
 import java.sql.*;
 import java.util.*;
@@ -11,6 +12,11 @@ public class SqlStorage implements Storage {
     private final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
         this.sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
@@ -129,19 +135,8 @@ public class SqlStorage implements Storage {
                 SectionType type = e.getKey();
                 ps.setString(1, resume.getUuid());
                 ps.setString(2, type.name());
-                switch (type) {
-                    case ACHIEVEMENT:
-                    case QUALIFICATIONS:
-                        List<String> list = ((ListSection) e.getValue()).getElements();
-                        String listToString = String.join("\n", list);
-                        ps.setString(3, listToString);
-                        break;
-                    case PERSONAL:
-                    case OBJECTIVE:
-                        StringSection ss = (StringSection) e.getValue();
-                        ps.setString(3, ss.getText());
-                        break;
-                }
+                AbstractSection section = e.getValue();
+                ps.setString(3, JsonParser.write(section, AbstractSection.class));
                 ps.addBatch();
             }
             ps.executeBatch();
@@ -160,17 +155,7 @@ public class SqlStorage implements Storage {
         String value = rs.getString("value");
         if (value != null) {
             SectionType type = SectionType.valueOf(rs.getString("type"));
-            switch (type) {
-                case PERSONAL:
-                case OBJECTIVE:
-                    r.setSection(type, new StringSection(value));
-                    break;
-                case ACHIEVEMENT:
-                case QUALIFICATIONS:
-                    String[] strArray = value.split("\n");
-                    r.setSection(type, new ListSection(Arrays.asList(strArray)));
-                    break;
-            }
+            r.setSection(type, JsonParser.read(value, AbstractSection.class));
         }
     }
 
