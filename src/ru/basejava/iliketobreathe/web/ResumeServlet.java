@@ -1,9 +1,9 @@
 package ru.basejava.iliketobreathe.web;
 
 import ru.basejava.iliketobreathe.Config;
-import ru.basejava.iliketobreathe.model.ContactType;
-import ru.basejava.iliketobreathe.model.Resume;
+import ru.basejava.iliketobreathe.model.*;
 import ru.basejava.iliketobreathe.storage.Storage;
+import ru.basejava.iliketobreathe.util.DateUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
 
@@ -26,8 +28,14 @@ public class ResumeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        Resume r = storage.get(uuid);
-        r.setFullName(fullName);
+        Resume r;
+        boolean isExisted = (uuid.length() != 0);
+        if (isExisted) {
+            r = storage.get(uuid);
+            r.setFullName(fullName);
+        } else {
+            r = new Resume(fullName);
+        }
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
             if (value != null && value.trim().length() != 0) {
@@ -36,7 +44,47 @@ public class ResumeServlet extends HttpServlet {
                 r.getContacts().remove(type);
             }
         }
-        storage.update(r);
+        for (SectionType type : SectionType.values()) {
+            String value = request.getParameter(type.name());
+            if (value != null && value.trim().length() != 0) {
+                switch (type) {
+                    case PERSONAL:
+                    case OBJECTIVE:
+                        r.setSection(type, new StringSection(value));
+                        break;
+                    case ACHIEVEMENT:
+                    case QUALIFICATIONS:
+                        r.setSection(type, new ListSection(value.split("\\n")));
+                        break;
+                    case EXPERIENCE:
+                    case EDUCATION:
+                        List<Organization> organizations = new ArrayList<>();
+                        List<Organization.Period> periods = new ArrayList<>();
+                        String[] orgNames = request.getParameterValues(type.name());
+                        String[] orgUrls = request.getParameterValues(type.name() + "url");
+                        for (int i = 0; i < orgNames.length; i++) {
+                            Link link = new Link(orgNames[i], orgUrls[i]);
+                            String[] startDates = request.getParameterValues(type.name() + "startDate" + i);
+                            String[] endDates = request.getParameterValues(type.name() + "endDate" + i);
+                            String[] titles = request.getParameterValues(type.name() + "title" + i);
+                            String[] descriptions = request.getParameterValues(type.name() + "description" + i);
+                            for (int j = 0; j < startDates.length; j++) {
+                                periods.add(new Organization.Period(DateUtil.parse(startDates[i]), DateUtil.parse(endDates[i]), titles[i], descriptions[i]));
+                            }
+                            organizations.add(new Organization(link, periods));
+                        }
+                        r.setSection(type, new OrganizationSection(organizations));
+                }
+            } else {
+                r.getSections().remove(type);
+            }
+        }
+        if (isExisted) {
+            storage.update(r);
+        } else {
+            storage.save(r);
+        }
+
         response.sendRedirect("resume");
     }
 
@@ -58,6 +106,28 @@ public class ResumeServlet extends HttpServlet {
             case "edit":
                 r = storage.get(uuid);
                 break;
+            case "add":
+                r = new Resume();
+                for (SectionType type : SectionType.values()) {
+                    AbstractSection section = r.getSection(type);
+                    switch (type) {
+                        case PERSONAL:
+                        case OBJECTIVE:
+                            section = new StringSection("");
+                            break;
+                        case ACHIEVEMENT:
+                        case QUALIFICATIONS:
+                            section = new ListSection("");
+                            break;
+                        case EDUCATION:
+                        case EXPERIENCE:
+                            section = new OrganizationSection(new Organization("", "", new Organization.Period()));
+                            break;
+                    }
+                    r.setSection(type, section);
+                }
+                break;
+
             default:
                 throw new IllegalStateException("Action " + action + " is illegal");
         }

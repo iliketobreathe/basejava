@@ -2,6 +2,7 @@ package ru.basejava.iliketobreathe;
 
 import ru.basejava.iliketobreathe.model.*;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,8 +11,10 @@ public class ResumeTestData {
         Resume resume = new Resume(uuid, fullName);
         resume.setContact(ContactType.EMAIL, "yandex@yandex.ru");
         resume.setContact(ContactType.PHONE, "+7 (999) 999-99-99");
-        resume.setContact(ContactType.HOMEPAGE, "yandex.ru");
-        resume.setContact(ContactType.GITHUB, "github777");
+        resume.setContact(ContactType.HOMEPAGE, "https://yandex.ru/");
+        resume.setContact(ContactType.GITHUB, "https://github.com/iliketobreathe");
+        resume.setContact(ContactType.SKYPE, "https://skype.com");
+        resume.setContact(ContactType.LINKEDIN, "https://www.linkedin.com");
 
         resume.setSection(SectionType.PERSONAL, new StringSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
@@ -32,12 +35,12 @@ public class ResumeTestData {
                 "Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
-/*        List<Organization> organizations = Arrays.asList(new Organization(new Link("Alcatel", "http://www.alcatel.ru/"), Arrays.asList(new Organization.Period (LocalDate.of(1997, 7, 1), LocalDate.of(2005, 1, 1), "Инженер по аппаратному и программному тестированию", "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."))));
+        List<Organization> organizations = Arrays.asList(new Organization(new Link("Alcatel", "http://www.alcatel.ru/"), Arrays.asList(new Organization.Period (LocalDate.of(1997, 7, 1), LocalDate.of(2005, 1, 1), "Инженер по аппаратному и программному тестированию", "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."))));
         resume.setSection(SectionType.EXPERIENCE, new OrganizationSection(organizations));
 
         List<Organization> education = Arrays.asList(new Organization(new Link("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "http://www.ifmo.ru/"), Arrays.asList(new Organization.Period(LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)", ""),
                 new Organization.Period(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1), "Аспирантура (программист С, С++)", ""))));
-        resume.setSection(SectionType.EDUCATION, new OrganizationSection(education));*/
+        resume.setSection(SectionType.EDUCATION, new OrganizationSection(education));
 
         return resume;
     }

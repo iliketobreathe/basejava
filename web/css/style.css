@@ -48,6 +48,7 @@ li {
 a[href^="skype:"] {
     padding-left: 20px !important;
     background: url(../img/skype.png) no-repeat center left;
+    background-size: 15px;
 }
 
 a[href^="mailto:"] {
@@ -59,14 +60,17 @@ a[href^="mailto:"] {
 a[href^="https://stackoverflow.com"] {
     padding-left: 20px !important;
     background: url(../img/so.png) no-repeat center left;
+    background-size: 15px;
 }
 
 a[href^="https://www.linkedin.com"] {
     padding-left: 20px !important;
     background: url(../img/lin.png) no-repeat center left;
+    background-size: 15px;
 }
 
 a[href*="github."] {
     padding-left: 20px !important;
     background: url(../img/gh.png) no-repeat center left;
+    background-size: 15px;
 }
