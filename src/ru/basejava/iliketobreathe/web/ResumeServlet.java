@@ -30,23 +30,26 @@ public class ResumeServlet extends HttpServlet {
         String fullName = request.getParameter("fullName");
         Resume r;
         boolean isExisted = (uuid.length() != 0);
+
         if (isExisted) {
             r = storage.get(uuid);
             r.setFullName(fullName);
         } else {
             r = new Resume(fullName);
         }
+
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
-            if (value != null && value.trim().length() != 0) {
+            if (value.trim().length() != 0) {
                 r.setContact(type, value);
             } else {
                 r.getContacts().remove(type);
             }
         }
+
         for (SectionType type : SectionType.values()) {
             String value = request.getParameter(type.name());
-            if (value != null && value.trim().length() != 0) {
+            if (value.trim().length() != 0) {
                 switch (type) {
                     case PERSONAL:
                     case OBJECTIVE:
@@ -58,27 +61,38 @@ public class ResumeServlet extends HttpServlet {
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        List<Organization> organizations = new ArrayList<>();
-                        List<Organization.Period> periods = new ArrayList<>();
-                        String[] orgNames = request.getParameterValues(type.name());
-                        String[] orgUrls = request.getParameterValues(type.name() + "url");
-                        for (int i = 0; i < orgNames.length; i++) {
-                            Link link = new Link(orgNames[i], orgUrls[i]);
-                            String[] startDates = request.getParameterValues(type.name() + "startDate" + i);
-                            String[] endDates = request.getParameterValues(type.name() + "endDate" + i);
-                            String[] titles = request.getParameterValues(type.name() + "title" + i);
-                            String[] descriptions = request.getParameterValues(type.name() + "description" + i);
-                            for (int j = 0; j < startDates.length; j++) {
-                                periods.add(new Organization.Period(DateUtil.parse(startDates[i]), DateUtil.parse(endDates[i]), titles[i], descriptions[i]));
+                        String[] values = request.getParameterValues(type.name());
+                        if (values.length >= 2) {
+                            List<Organization> organizations = new ArrayList<>();
+                            String[] orgUrls = request.getParameterValues(type.name() + "url");
+                            for (int i = 0; i < values.length; i++) {
+                                String orgName = values[i];
+                                if (orgName.trim().length() != 0) {
+                                    List<Organization.Period> periods = new ArrayList<>();
+                                    Link link = new Link(orgName, orgUrls[i]);
+                                    String[] startDates = request.getParameterValues(type.name() + "startDate" + i);
+                                    String[] endDates = request.getParameterValues(type.name() + "endDate" + i);
+                                    String[] titles = request.getParameterValues(type.name() + "title" + i);
+                                    String[] descriptions = request.getParameterValues(type.name() + "description" + i);
+                                    for (int j = 0; j < titles.length; j++) {
+                                        if (titles[j] != null || titles[j].trim().length() != 0) {
+                                            periods.add(new Organization.Period(DateUtil.parse(startDates[j]), DateUtil.parse(endDates[j]), titles[j], descriptions[j]));
+                                        }
+                                    }
+                                    organizations.add(new Organization(link, periods));
+                                }
                             }
-                            organizations.add(new Organization(link, periods));
+                            r.setSection(type, new OrganizationSection(organizations));
+                        } else {
+                            r.getSections().remove(type);
                         }
-                        r.setSection(type, new OrganizationSection(organizations));
+                        break;
                 }
             } else {
                 r.getSections().remove(type);
             }
         }
+
         if (isExisted) {
             storage.update(r);
         } else {
@@ -103,8 +117,36 @@ public class ResumeServlet extends HttpServlet {
                 response.sendRedirect("resume");
                 return;
             case "view":
+                r = storage.get(uuid);
+                break;
             case "edit":
                 r = storage.get(uuid);
+                for (SectionType type : SectionType.values()) {
+                    AbstractSection section = r.getSection(type);
+                    switch (type) {
+                        case PERSONAL:
+                        case OBJECTIVE:
+                            if (section == null) {
+                                section = new StringSection("");
+                            }
+                            break;
+                        case ACHIEVEMENT:
+                        case QUALIFICATIONS:
+                            if (section == null) {
+                                section = new ListSection("");
+                            }
+                            break;
+                        case EDUCATION:
+                        case EXPERIENCE:
+                            if (section == null) {
+                                section = new OrganizationSection(new Organization("", "", new Organization.Period()));
+                            } else {
+                                ((OrganizationSection)section).getOrganizations().add(new Organization("", "", new Organization.Period()));
+                            }
+                            break;
+                    }
+                    r.setSection(type, section);
+                }
                 break;
             case "add":
                 r = new Resume();
