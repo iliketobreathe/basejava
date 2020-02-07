@@ -62,7 +62,7 @@ public class ResumeServlet extends HttpServlet {
                     case EXPERIENCE:
                     case EDUCATION:
                         String[] values = request.getParameterValues(type.name());
-                        if (values.length >= 2) {
+                        if (values.length >= 2 || values[0].trim().length() != 0) {
                             List<Organization> organizations = new ArrayList<>();
                             String[] orgUrls = request.getParameterValues(type.name() + "url");
                             for (int i = 0; i < values.length; i++) {
@@ -75,7 +75,7 @@ public class ResumeServlet extends HttpServlet {
                                     String[] titles = request.getParameterValues(type.name() + "title" + i);
                                     String[] descriptions = request.getParameterValues(type.name() + "description" + i);
                                     for (int j = 0; j < titles.length; j++) {
-                                        if (titles[j] != null || titles[j].trim().length() != 0) {
+                                        if (titles[j].trim().length() != 0) {
                                             periods.add(new Organization.Period(DateUtil.parse(startDates[j]), DateUtil.parse(endDates[j]), titles[j], descriptions[j]));
                                         }
                                     }
@@ -141,6 +141,9 @@ public class ResumeServlet extends HttpServlet {
                             if (section == null) {
                                 section = new OrganizationSection(new Organization("", "", new Organization.Period()));
                             } else {
+                                for (Organization organization : ((OrganizationSection)section).getOrganizations()) {
+                                    organization.getPeriods().add(new Organization.Period());
+                                }
                                 ((OrganizationSection)section).getOrganizations().add(new Organization("", "", new Organization.Period()));
                             }
                             break;
