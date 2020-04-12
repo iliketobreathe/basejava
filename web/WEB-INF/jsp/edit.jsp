@@ -32,24 +32,25 @@
         <c:forEach var="type" items="<%=SectionType.values()%>">
             <c:set var="section" value="${resume.getSection(type)}"/>
             <jsp:useBean id="section" type="ru.basejava.iliketobreathe.model.AbstractSection"/>
-            <h3>${type.title}:</h3><br>
+            <hr>
+            <h3>${type.title}:</h3>
             <c:choose>
                 <c:when test="${type=='PERSONAL' || type=='OBJECTIVE'}">
-                    <input type="text" name="${type}" size=30 value="<%=section%>"><br><br>
+                    <br><input type="text" name="${type}" size=30 value="<%=section%>"><br><br>
                 </c:when>
                 <c:when test="${type=='ACHIEVEMENT' || type=='QUALIFICATIONS'}">
-                    <textarea name="${type}" rows="5" cols="100"><%=String.join("\n", ((ListSection)section).getElements())%></textarea><br><br>
+                    <br><textarea name="${type}" rows="5" cols="100"><%=String.join("\n", ((ListSection)section).getElements())%></textarea><br><br>
                 </c:when>
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
                     <c:forEach var="organization" items="<%=((OrganizationSection)section).getOrganizations()%>" varStatus="index">
-                        Организация:<br>
-                        <input type="text" name="${type}" size="30" value="${organization.homePage.name}"/><br>
+                        <br><b>Организация:</b>
+                        <br><input type="text" name="${type}" size="30" value="${organization.homePage.name}"/><br>
                         Домашняя страницы:<br>
                         <input type="text" name="${type}url" size="30" value="${organization.homePage.url}"/><br>
-                        Периоды работы<br>
+                        <br>Периоды работы:
                         <c:forEach var="period" items="${organization.periods}">
                             <jsp:useBean id="period" type="ru.basejava.iliketobreathe.model.Organization.Period"/>
-                            Дата начала:<br>
+                            <br><br>Дата начала:<br>
                             <input type="text" name="${type}startDate${index.index}" size="30" value="<%=DateUtil.write(period.getStartDate())%>"/><br>
                             Дата окончания:<br>
                             <input type="text" name="${type}endDate${index.index}" size="30" value="<%=DateUtil.write(period.getEndDate())%>"/><br>
